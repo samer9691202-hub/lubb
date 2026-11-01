@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="LUBB logo">
+<defs>
+ <linearGradient id="bg" x1=".08" y1="0" x2=".92" y2="1"><stop stop-color="#111A35"/><stop offset=".52" stop-color="#202F60"/><stop offset="1" stop-color="#4B36A0"/></linearGradient>
+ <linearGradient id="glass" x1=".15" y1="0" x2=".85" y2="1"><stop stop-color="#FFFFFF"/><stop offset=".48" stop-color="#DCEBFF"/><stop offset="1" stop-color="#8AB9FF"/></linearGradient>
+ <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#A78BFA"/><stop offset=".55" stop-color="#638BFF"/><stop offset="1" stop-color="#38BDF8"/></linearGradient>
+ <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FFFFFF" stop-opacity=".98"/><stop offset="1" stop-color="#9CCBFF" stop-opacity=".34"/></linearGradient>
+ <radialGradient id="shine" cx=".2" cy=".08" r=".9"><stop stop-color="#FFFFFF" stop-opacity=".25"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+ <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect x="42" y="42" width="940" height="940" rx="245" fill="#070E24" opacity=".34" filter="url(#shadow)"/>
+<rect x="36" y="36" width="952" height="952" rx="244" fill="url(#bg)"/>
+<rect x="38" y="38" width="948" height="948" rx="242" fill="url(#shine)"/>
+<rect x="48" y="48" width="928" height="928" rx="230" fill="none" stroke="url(#rim)" stroke-opacity=".72" stroke-width="5"/>
+<path d="M115 230C145 112 260 80 392 78" fill="none" stroke="#FFF" stroke-opacity=".28" stroke-width="17" stroke-linecap="round"/>
+<circle cx="590" cy="462" r="258" fill="#07132F" fill-opacity=".28" stroke="url(#rim)" stroke-width="22"/>
+<circle cx="590" cy="462" r="222" fill="none" stroke="#FFFFFF" stroke-opacity=".18" stroke-width="5"/>
+<!-- Signature L monogram: a confident vertical stem and broad rounded foot -->
+<path d="M260 247C260 207 292 175 332 175H383V623C383 657 410 684 444 684H650V746H427C335 746 260 671 260 579V247Z" fill="url(#glass)"/>
+<path d="M260 247C260 207 292 175 332 175H383V623C383 657 410 684 444 684H650" fill="none" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="10" stroke-linecap="round"/>
+<!-- Clock face and hands -->
+<circle cx="590" cy="462" r="153" fill="#111D43" fill-opacity=".58" stroke="url(#violet)" stroke-width="13"/>
+<circle cx="590" cy="462" r="133" fill="none" stroke="#EAF4FF" stroke-opacity=".35" stroke-width="4"/>
+<g stroke="#FFFFFF" stroke-linecap="round" stroke-width="17"><path d="M590 357V462L663 418" fill="none"/></g>
+<circle cx="590" cy="462" r="14" fill="#FFFFFF"/>
+<g stroke="#DDEBFF" stroke-width="8" stroke-linecap="round"><path d="M590 329v17M590 578v17M457 462h17M706 462h17"/></g>
+<circle cx="795" cy="205" r="22" fill="#6EE7F9"/><circle cx="795" cy="205" r="9" fill="#FFFFFF"/>
+<path d="M442 812H690" stroke="url(#violet)" stroke-width="12" stroke-linecap="round" opacity=".95"/>
+</svg>
