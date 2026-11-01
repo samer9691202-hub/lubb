@@ -1,12 +1,12 @@
 /* LUBB v61 — versioned, update-safe offline cache */
-const CACHE_PREFIX = 'lubb-v61-official-logo-refresh-';
+const CACHE_PREFIX = 'lubb-v61-official-logo-assets-v2-';
 const CACHE = CACHE_PREFIX + 'core';
 const BASE = self.registration.scope;
 const CORE_FILES = [
   './', './index.html', './manifest.webmanifest', './sw.js',
   './icons/icon-192.png', './icons/icon-512.png',
   './icons/icon-maskable-512.png', './icons/lubb-logo-original.png',
-  './icons/lubb-logo-2048.png', './icons/lubb-logo.svg'
+  './icons/lubb-logo-2048.png', './icons/lubb-logo.svg', './icons/apple-touch-icon.png', './icons/favicon-32.png'
 ].map(path => new URL(path, BASE).toString());
 
 self.addEventListener('install', event => {
@@ -20,7 +20,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter(key => (key.startsWith('lubb-') || key.startsWith('lubb-')) && key !== CACHE).map(key => caches.delete(key)));
+    await Promise.all(keys.filter(key => (key.startsWith('lubb-') || key.startsWith('nexora-')) && key !== CACHE).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
 });
