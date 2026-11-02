@@ -1,7 +1,7 @@
-/* LUBB v61.4 — unified logo & icon assets */
-const CACHE='lubb-v61.4-unified-icons';
+/* LUBB v61.5 — unified logo & icon assets */
+const CACHE='lubb-v61.5-unified-icons';
 const BASE=self.registration.scope;
-const CORE=['./','./index.html','./manifest.webmanifest?v=61.4','./favicon.ico?v=61.4','./icons/favicon-16.png?v=61.4','./icons/favicon-32.png?v=61.4','./icons/favicon-48.png?v=61.4','./icons/lubb-logo-256.png?v=61.4','./icons/lubb-logo.svg?v=61.4','./icons/icon-192.png?v=61.4','./icons/icon-512.png?v=61.4','./icons/icon-maskable-512.png?v=61.4','./icons/apple-touch-icon.png?v=61.4'].map(x=>new URL(x,BASE).href);
+const CORE=['./','./index.html','./manifest.webmanifest?v=61.5','./favicon.ico?v=61.5','./icons/fav-16.png?v=61.5','./icons/fav-32.png?v=61.5','./icons/fav-48.png?v=61.5','./icons/lubb-logo-256.png?v=61.5','./icons/icon-192.png?v=61.5','./icons/icon-512.png?v=61.5','./icons/icon-maskable-512.png?v=61.5','./icons/apple-touch-icon.png?v=61.5'].map(x=>new URL(x,BASE).href);
 /* كل ملف يُخزَّن على حدة: فشل ملف واحد لا يُفشل تثبيت العامل كاملًا */
 self.addEventListener('install',e=>e.waitUntil((async()=>{
   const c=await caches.open(CACHE);
@@ -16,7 +16,7 @@ self.addEventListener('message',e=>{if(e.data?.type==='SKIP_WAITING')self.skipWa
 self.addEventListener('fetch',e=>{
   const r=e.request;if(r.method!=='GET')return;
   const u=new URL(r.url);if(u.origin!==self.location.origin)return;
-  const isBrand=/favicon|lubb-logo|icon-(16|32|48|192|512|maskable)|apple-touch-icon|manifest\.webmanifest/.test(u.pathname);
+  const isBrand=/favicon|lubb-logo|fav-(16|32|48)|icon-(192|512|maskable)|apple-touch-icon|manifest\.webmanifest/.test(u.pathname);
   if(isBrand){
     e.respondWith((async()=>{
       try{const fresh=await fetch(r,{cache:'reload'});if(fresh.ok){const c=await caches.open(CACHE);await c.put(r,fresh.clone())}return fresh}
