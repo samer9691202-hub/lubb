@@ -1,7 +1,7 @@
-/* LUBB v61.7 — unified logo & icon assets */
-const CACHE='lubb-v61.7-unified-icons';
+/* LUBB v61.8 — unified logo & icon assets */
+const CACHE='lubb-v61.8-unified-icons';
 const BASE=self.registration.scope;
-const CORE=['./','./index.html','./manifest.webmanifest?v=61.7','./favicon.ico?v=61.7','./icons/fav-16.png?v=61.7','./icons/fav-32.png?v=61.7','./icons/fav-48.png?v=61.7','./icons/lubb-logo-256.png?v=61.7','./icons/icon-192.png?v=61.7','./icons/icon-512.png?v=61.7','./icons/icon-maskable-512.png?v=61.7','./icons/apple-touch-icon.png?v=61.7'].map(x=>new URL(x,BASE).href);
+const CORE=['./','./index.html','./manifest.webmanifest?v=61.8','./favicon.ico?v=61.8','./icons/fav-16.png?v=61.8','./icons/fav-32.png?v=61.8','./icons/fav-48.png?v=61.8','./icons/lubb-logo-256.png?v=61.8','./icons/icon-192.png?v=61.8','./icons/icon-512.png?v=61.8','./icons/icon-maskable-512.png?v=61.8','./icons/apple-touch-icon.png?v=61.8'].map(x=>new URL(x,BASE).href);
 /* كل ملف يُخزَّن على حدة: فشل ملف واحد لا يُفشل تثبيت العامل كاملًا */
 self.addEventListener('install',e=>e.waitUntil((async()=>{
   const c=await caches.open(CACHE);
