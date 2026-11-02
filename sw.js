@@ -1,7 +1,7 @@
 /* LUBB v61.3 — canonical official logo assets */
-const CACHE='lubb-v61.3-official-brand-final';
+const CACHE='lubb-v61.3.1-official-brand-final';
 const BASE=self.registration.scope;
-const CORE=['./','./index.html','./manifest.webmanifest?v=61.3','./favicon.ico?v=61.3','./icons/favicon-32.png?v=61.3','./icons/lubb-logo.svg?v=61.3','./icons/lubb-logo-original.png?v=61.3','./icons/icon-192.png?v=61.3','./icons/icon-512.png?v=61.3','./icons/icon-maskable-512.png?v=61.3','./icons/apple-touch-icon.png?v=61.3'].map(x=>new URL(x,BASE).href);
+const CORE=['./','./index.html','./manifest.webmanifest?v=61.3.1','./favicon.ico?v=61.3.1','./icons/favicon-32.png?v=61.3.1','./icons/lubb-logo.svg?v=61.3.1','./icons/lubb-logo-original.png?v=61.3.1','./icons/icon-192.png?v=61.3.1','./icons/icon-512.png?v=61.3.1','./icons/icon-maskable-512.png?v=61.3.1','./icons/apple-touch-icon.png?v=61.3.1'].map(x=>new URL(x,BASE).href);
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(CORE);await self.skipWaiting()})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys()){if(k.startsWith('lubb-')&&k!==CACHE)await caches.delete(k)}await self.clients.claim()})()));
 self.addEventListener('message',e=>{if(e.data?.type==='SKIP_WAITING')self.skipWaiting()});
