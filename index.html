@@ -1260,9 +1260,9 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
       <div class="add">
         <label class="sr" for="taskInput">مهمة جديدة</label>
         <input class="field" id="taskInput" placeholder="مهمة جديدة لهذا اليوم" autocomplete="off">
-        <button class="btn" id="taskAdd">أضف</button>
+        <button class="btn" id="taskAdd" aria-expanded="false">إضافة</button>
       </div>
-      <div class="recurrence-row" aria-label="إعداد تكرار المهمة">
+      <div class="recurrence-row" id="taskOptions" aria-label="إعداد أولوية وتكرار المهمة" hidden>
         <label>الأولوية <select class="select" id="taskPriority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select></label>
         <label>التكرار <select class="select" id="taskRecurrence"><option value="none">بدون تكرار</option><option value="daily">يوميًا</option><option value="weekly">أسبوعيًا</option><option value="monthly">شهريًا</option></select></label>
         <label id="recurrenceEndWrap" hidden>حتى تاريخ <input class="field" type="date" id="taskRecurrenceEnd"></label>
@@ -1738,8 +1738,16 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     fitClamp($('#taskList'),'.t-text');
     syncListMore('taskList','tasksMore',tasksExpanded,items.length);
   }
+  let taskOptionsOpen = false;
+  function setTaskOptionsOpen(open){
+    taskOptionsOpen = !!open;
+    $('#taskOptions').hidden = !taskOptionsOpen;
+    $('#taskAdd').textContent = taskOptionsOpen ? 'حفظ المهمة' : 'إضافة';
+    $('#taskAdd').setAttribute('aria-expanded', String(taskOptionsOpen));
+  }
   function addTask(){
     const el = $('#taskInput'), text = el.value.trim();
+    if(!taskOptionsOpen){ setTaskOptionsOpen(true); if(!text){el.focus();} return; }
     if(!text){ el.focus(); return; }
     const recurrence=$('#taskRecurrence').value, end=$('#taskRecurrenceEnd').value;
     const start=dparse(ui.sel), until=recurrence==='none'?start:(end?dparse(end):new Date(start.getFullYear(),start.getMonth()+3,start.getDate()));
@@ -1748,7 +1756,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     while(cursor<=until && count<400){const date=dkey(cursor);if(!state.tasks.some(t=>t.date===date&&!t.archived&&String(t.text).trim().toLowerCase()===text.toLowerCase())){state.tasks.push({id:uid(),text,done:false,prio:Number($('#taskPriority').value)||0,date,recurrence:recurrence==='none'?'':recurrence});count++;}
       if(recurrence==='daily')cursor.setDate(cursor.getDate()+1);else if(recurrence==='weekly')cursor.setDate(cursor.getDate()+7);else if(recurrence==='monthly'){const day=cursor.getDate();cursor.setMonth(cursor.getMonth()+1);if(cursor.getDate()<day)cursor.setDate(0);}else break;
     }
-    el.value='';$('#taskPriority').value='0';$('#taskRecurrence').value='none';$('#recurrenceEndWrap').hidden=true;el.focus();renderAll();save();toast(recurrence==='none'?'تمت إضافة المهمة':'تم إنشاء '+count+' مهمة متكررة');
+    el.value='';$('#taskPriority').value='0';$('#taskRecurrence').value='none';$('#recurrenceEndWrap').hidden=true;setTaskOptionsOpen(false);el.focus();renderAll();save();toast(recurrence==='none'?'تمت إضافة المهمة':'تم إنشاء '+count+' مهمة متكررة');
   }
   $('#taskRecurrence').addEventListener('change',()=>{const v=$('#taskRecurrence').value;$('#recurrenceEndWrap').hidden=v==='none';if(v!=='none'&&!$('#taskRecurrenceEnd').value){const d=dparse(ui.sel);d.setMonth(d.getMonth()+3);$('#taskRecurrenceEnd').value=dkey(d);}});
   $('#taskAdd').onclick = addTask;
