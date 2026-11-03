@@ -1125,6 +1125,30 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 @media(max-width:480px){.lubb-recovery-dialog{padding:22px 18px;border-radius:23px}.lubb-recovery-dialog h2{font-size:19px}}
 </style>
 
+
+<style id="lubb-v63-13-recovery-landscape-fix">
+/* Recovery dialog: keep it above every app layer and usable in compact viewports. */
+#lubbRecoveryOverlay{position:fixed!important;inset:0!important;z-index:2147483000!important;display:grid;place-items:center;box-sizing:border-box;padding:max(14px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom))!important;overflow-y:auto!important;background:rgba(12,18,38,.66)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
+#lubbRecoveryOverlay[hidden]{display:none!important}
+#lubbRecoveryOverlay .lubb-recovery-dialog{width:min(100%,440px)!important;max-height:calc(100dvh - 28px)!important;overflow:auto!important;margin:auto!important;padding:clamp(18px,4vw,28px)!important;border-radius:24px!important;background:var(--surface,#fff)!important;color:var(--ink,#18213a)!important;box-shadow:0 24px 90px rgba(0,0,0,.32)!important}
+#lubbRecoveryInput{font-size:16px!important;min-height:54px!important}
+@media(hover:none) and (max-height:600px){
+  .side-nav{position:fixed!important;top:auto!important;bottom:max(5px,env(safe-area-inset-bottom))!important;left:max(6px,env(safe-area-inset-left))!important;right:max(6px,env(safe-area-inset-right))!important;inset-inline:auto!important;width:auto!important;max-width:none!important;height:58px!important;min-height:58px!important;transform:none!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-around!important;gap:3px!important;padding:4px 6px!important;border-radius:18px!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important;z-index:1000!important}
+  .side-nav::-webkit-scrollbar{display:none!important}
+  .side-nav>button{flex:1 0 44px!important;min-width:44px!important;min-height:46px!important;height:46px!important;padding:4px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important}
+  .side-nav>button svg{width:19px!important;height:19px!important}
+  .side-nav>button span:not(.nav-brand-mark){display:block!important;font-size:9px!important;line-height:1.1!important;white-space:nowrap!important}
+  .side-nav .nav-brand{min-width:48px!important;flex:0 0 48px!important}
+  .side-nav .nav-brand-name,.side-nav .nav-collapse,.side-nav .nav-section-label,.side-nav .nav-divider,#navSettings{display:none!important}
+  .wrap{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
+}
+@media(max-width:900px) and (orientation:landscape) and (min-height:601px){
+  .side-nav{bottom:max(8px,env(safe-area-inset-bottom))!important;left:8px!important;right:8px!important;inset-inline:auto!important;width:auto!important;max-width:none!important;top:auto!important;transform:none!important;flex-direction:row!important;justify-content:space-around!important}
+  .side-nav>button:not(.nav-brand){min-height:48px!important}
+  .wrap{padding-bottom:88px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app-tools" aria-label="حالة التطبيق">
