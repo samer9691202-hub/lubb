@@ -1114,6 +1114,17 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 </style>
 <style id="lubb-v636-mobile-final">
 </style>
+
+<style id="lubb-recovery-modal-style">
+.lubb-recovery-overlay{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:20px;background:rgba(18,24,48,.58);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.lubb-recovery-overlay[hidden]{display:none!important}.lubb-recovery-dialog{width:min(100%,430px);background:var(--card,rgba(255,255,255,.98));color:var(--text,#17213b);border:1px solid rgba(255,255,255,.72);border-radius:26px;padding:26px;box-shadow:0 24px 80px rgba(12,20,50,.28);direction:rtl;animation:lubbRecoveryIn .2s ease-out}
+@keyframes lubbRecoveryIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.lubb-recovery-icon{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#7654ed,#3977ed);color:white;font-size:25px;margin-bottom:16px;box-shadow:0 8px 22px #6258db44}
+.lubb-recovery-dialog h2{font-size:21px;margin:0 0 8px;font-weight:800}.lubb-recovery-dialog p{font-size:14px;line-height:1.8;color:var(--muted,#778096);margin:0 0 18px}
+.lubb-recovery-input{width:100%;min-height:52px;border:1px solid var(--line,#dfe4ef);border-radius:15px;background:var(--input-bg,#f8f9fd);color:inherit;padding:12px 15px;font:inherit;outline:none;box-sizing:border-box}.lubb-recovery-input:focus{border-color:#6472ed;box-shadow:0 0 0 4px #6472ed20}.lubb-recovery-error{min-height:22px;color:#d6455d;font-size:13px;margin-top:8px}.lubb-recovery-actions{display:flex;gap:10px;margin-top:14px}.lubb-recovery-actions button{flex:1;min-height:48px;border:0;border-radius:14px;font:inherit;font-weight:700;cursor:pointer}.lubb-recovery-confirm{background:linear-gradient(110deg,#7654ed,#3977ed);color:#fff}.lubb-recovery-cancel{background:var(--soft,#eef1f8);color:inherit}
+@media(max-width:480px){.lubb-recovery-dialog{padding:22px 18px;border-radius:23px}.lubb-recovery-dialog h2{font-size:19px}}
+</style>
+
 </head>
 <body>
 <div class="app-tools" aria-label="حالة التطبيق">
@@ -1404,6 +1415,8 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button type="button" id="toastUndo" hidden>تراجع</button></div>
 <div class="lubb-lock-screen" id="lubbLockScreen" hidden><form class="lubb-lock-card" id="lubbUnlockForm"><div class="lock-logo">LUBB</div><h2>التطبيق مقفل</h2><p>أدخل رمز PIN أو رمز المالك للمتابعة</p><input class="field" id="lubbUnlockPin" type="password" inputmode="text" maxlength="40" autocomplete="current-password" aria-label="رمز PIN أو رمز المالك" required><button class="btn" type="submit">فتح التطبيق</button><button class="lock-recover" id="pinForgot" type="button">نسيت رمز PIN؟ استرداد الرمز</button><small id="lubbUnlockError" role="alert"></small></form></div>
+
+<div class="lubb-recovery-overlay" id="lubbRecoveryOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="lubbRecoveryTitle"><form class="lubb-recovery-dialog" id="lubbRecoveryForm"><div class="lubb-recovery-icon" aria-hidden="true">⌑</div><h2 id="lubbRecoveryTitle">استعادة الوصول</h2><p id="lubbRecoveryMessage">أدخل عبارة الاسترداد الشخصية للمتابعة.</p><input class="lubb-recovery-input" id="lubbRecoveryInput" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="عبارة الاسترداد" required><div class="lubb-recovery-error" id="lubbRecoveryError" role="alert"></div><div class="lubb-recovery-actions"><button class="lubb-recovery-cancel" id="lubbRecoveryCancel" type="button">إلغاء</button><button class="lubb-recovery-confirm" type="submit">متابعة</button></div></form></div>
 
 <script>
 (function(){
@@ -2284,9 +2297,11 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   $('#pinSetup').onclick=async()=>{if(pinConfig&&confirm('الحماية مفعّلة. هل تريد تعطيل رمز PIN؟')){localStorage.removeItem(LOCK_KEY);pinConfig=null;$('#pinStatus').textContent='قفل اختياري برمز PIN';flash('تم تعطيل رمز الحماية');return;}if(!crypto?.subtle){flash('الحماية غير مدعومة في هذا المتصفح');return;}const pin=prompt('أدخل رمز PIN جديدًا (4 إلى 12 رقمًا):');if(pin===null)return;if(!/^\d{4,12}$/.test(pin)){flash('استخدم من 4 إلى 12 رقمًا');return;}const confirmPin=prompt('أعد إدخال الرمز للتأكيد:');if(pin!==confirmPin){flash('الرمزان غير متطابقين');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig={salt:b64(salt),hash:await hashPin(pin,salt)};localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#pinStatus').textContent='الحماية مفعّلة — يمكن استعادة PIN عند النسيان';flash('تم تفعيل رمز الحماية');};
   $('#lockNow').onclick=()=>{if(!pinConfig){flash('أعد إعداد رمز PIN أولًا');return;}showLock();};
   function showLock(){if(!pinConfig)return;$('#lubbLockScreen').hidden=false;$('#lubbUnlockPin').value='';$('#lubbUnlockError').textContent='';setTimeout(()=>$('#lubbUnlockPin').focus(),80);}
+
+  function askRecoveryPhrase(){return new Promise(resolve=>{const overlay=$('#lubbRecoveryOverlay'),form=$('#lubbRecoveryForm'),input=$('#lubbRecoveryInput'),cancel=$('#lubbRecoveryCancel'),error=$('#lubbRecoveryError');overlay.hidden=false;input.value='';error.textContent='';const finish=value=>{overlay.hidden=true;form.removeEventListener('submit',submit);cancel.removeEventListener('click',cancelAsk);overlay.removeEventListener('click',outside);document.removeEventListener('keydown',escape);resolve(value);};const submit=e=>{e.preventDefault();if(!input.value.trim()){error.textContent='يرجى إدخال عبارة الاسترداد.';input.focus();return;}finish(input.value);};const cancelAsk=()=>finish(null);const outside=e=>{if(e.target===overlay)cancelAsk();};const escape=e=>{if(e.key==='Escape')cancelAsk();};form.addEventListener('submit',submit);cancel.addEventListener('click',cancelAsk);overlay.addEventListener('click',outside);document.addEventListener('keydown',escape);setTimeout(()=>input.focus(),80);});}
   async function recoverPin(){
     if(!pinConfig){$('#lubbUnlockError').textContent='لا يوجد رمز PIN مضبوط لهذا التطبيق.';return;}
-    const code=prompt('أدخل عبارة الاسترداد الشخصية أو رمز الاسترداد:');if(code===null)return;
+    const code=await askRecoveryPhrase();if(code===null)return;
     try{
       let phraseOK=isOwnerCode(code);
       if(pinConfig.recoveryHash && pinConfig.recoverySalt){
