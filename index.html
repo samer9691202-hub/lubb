@@ -117,9 +117,11 @@ ul{margin:0;padding:0;list-style:none}
   .wrap{padding-right:112px}
 }
 @media(max-width:900px){
-  .side-nav{bottom:max(12px,env(safe-area-inset-bottom));inset-inline:12px;margin-inline:auto;max-width:460px;justify-content:space-between;gap:2px;padding:8px 10px;border-radius:26px}
-  .side-nav button{flex:1;min-height:50px;padding:4px 0}
-  .side-nav button span:not(.nav-brand-mark){display:none}
+  .side-nav{bottom:max(10px,env(safe-area-inset-bottom));inset-inline:10px;margin-inline:auto;max-width:560px;justify-content:space-around;gap:4px;padding:9px 8px;border-radius:22px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));box-shadow:0 14px 38px -16px rgba(35,48,100,.38),inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(24px) saturate(155%);-webkit-backdrop-filter:blur(24px) saturate(155%)}
+  .side-nav button{flex:1;min-width:0;min-height:54px;padding:6px 2px;gap:4px;border-radius:15px;font-size:.66rem}
+  .side-nav button span:not(.nav-brand-mark){display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .side-nav button[aria-current="page"],.side-nav button.active{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
+  .side-nav svg{width:21px;height:21px}
   .nav-divider{display:none}
   .nav-brand-mark{width:34px;height:34px}
 }
@@ -1088,7 +1090,8 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 
 <style id="lubb-v63-upgrade">
 .recurrence-row{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:-4px 0 12px}.recurrence-row label{display:grid;gap:5px;color:var(--muted);font-size:.8rem;font-weight:700}.recurrence-row .select,.recurrence-row .field{min-width:150px;min-height:40px}.recurrence-row[hidden],#recurrenceEndWrap[hidden]{display:none!important}
-#baseTabs{flex-wrap:wrap}#baseTabs button{min-width:86px}.insight-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.insight-tile{padding:14px;border:1px solid var(--line-2);border-radius:16px;background:var(--surface-2);min-width:0}.insight-tile b{display:block;font-size:1.55rem;line-height:1.4;font-variant-numeric:tabular-nums}.insight-tile span{font-size:.8rem;color:var(--muted)}.insight-bars{display:grid;gap:10px;margin:14px 0}.insight-bar{display:grid;grid-template-columns:90px minmax(0,1fr) 42px;gap:9px;align-items:center;font-size:.83rem}.insight-track{height:10px;border-radius:20px;background:var(--surface-3);overflow:hidden}.insight-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--accent-2))}.archive-list{display:grid;gap:9px}.archive-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface-2)}.archive-item .archive-copy{min-width:0;overflow-wrap:anywhere}.archive-item small{display:block;color:var(--muted);margin-top:4px}.archive-actions{display:flex;gap:6px;flex-wrap:wrap}.archive-actions button{border:1px solid var(--line-2);border-radius:10px;padding:7px 10px;background:var(--surface);color:var(--ink);font-weight:700}.archive-actions .restore{color:var(--accent)}.archive-actions .permadelete{color:var(--rose)}.lubb-lock-screen{position:fixed;z-index:99999;inset:0;display:grid;place-items:center;padding:20px;background:var(--bg,#0b1020)}.lubb-lock-screen[hidden]{display:none}.lubb-lock-card{width:min(100%,360px);padding:28px;border:1px solid var(--line-2);border-radius:24px;background:var(--surface);box-shadow:var(--shadow-lg);text-align:center}.lubb-lock-card .field{margin:14px 0;text-align:center;letter-spacing:.35em}.lubb-lock-card .btn{width:100%}.lock-logo{font-size:1.6rem;font-weight:900;letter-spacing:.16em;color:var(--accent)}.lubb-lock-card small{display:block;min-height:20px;color:var(--rose);margin-top:9px}.task-archive-btn{border:0;background:transparent;color:var(--muted);padding:5px;font-size:.78rem}.task-archive-btn:hover{color:var(--accent)}
+#baseTabs{flex-wrap:wrap}#baseTabs button{min-width:86px}.insight-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.insight-tile{padding:14px;border:1px solid var(--line-2);border-radius:16px;background:var(--surface-2);min-width:0}.insight-tile b{display:block;font-size:1.55rem;line-height:1.4;font-variant-numeric:tabular-nums}.insight-tile span{font-size:.8rem;color:var(--muted)}.insight-bars{display:grid;gap:10px;margin:14px 0}.insight-bar{display:grid;grid-template-columns:90px minmax(0,1fr) 42px;gap:9px;align-items:center;font-size:.83rem}.insight-track{height:10px;border-radius:20px;background:var(--surface-3);overflow:hidden}.insight-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--accent-2))}.archive-list{display:grid;gap:9px}.archive-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface-2)}.archive-item .archive-copy{min-width:0;overflow-wrap:anywhere}.archive-item small{display:block;color:var(--muted);margin-top:4px}.archive-actions{display:flex;gap:6px;flex-wrap:wrap}.archive-actions button{border:1px solid var(--line-2);border-radius:10px;padding:7px 10px;background:var(--surface);color:var(--ink);font-weight:700}.archive-actions .restore{color:var(--accent)}.archive-actions .permadelete{color:var(--rose)}.lubb-lock-screen{position:fixed;z-index:99999;inset:0;display:grid;place-items:center;padding:20px;background:var(--bg,#0b1020)}.lubb-lock-screen[hidden]{display:none}.lubb-lock-card{width:min(100%,390px);padding:30px 26px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line-2));border-radius:28px;background:linear-gradient(160deg,var(--surface),var(--surface-2));box-shadow:0 24px 70px -28px rgba(25,35,80,.48);text-align:center}
+.lubb-lock-card h2{font-size:1.35rem;margin:10px 0 7px}.lubb-lock-card p{color:var(--muted);font-size:.9rem;line-height:1.7}.lubb-lock-card .field{width:100%;min-height:52px;border-radius:15px;border:1px solid var(--line-2);background:var(--surface-2);font-size:1.1rem;letter-spacing:.12em}.lock-recover{display:block;width:100%;margin-top:13px;padding:11px;border:0;border-radius:13px;background:var(--accent-soft);color:var(--accent);font-weight:750}.lubb-lock-card .field{margin:14px 0;text-align:center;letter-spacing:.35em}.lubb-lock-card .btn{width:100%}.lock-logo{font-size:1.6rem;font-weight:900;letter-spacing:.16em;color:var(--accent)}.lubb-lock-card small{display:block;min-height:20px;color:var(--rose);margin-top:9px}.task-archive-btn{border:0;background:transparent;color:var(--muted);padding:5px;font-size:.78rem}.task-archive-btn:hover{color:var(--accent)}
 @media(max-width:680px){.insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.archive-item{align-items:flex-start;flex-direction:column}.archive-actions{width:100%}.archive-actions button{flex:1}.recurrence-row{align-items:stretch}.recurrence-row label{flex:1}.recurrence-row .select,.recurrence-row .field{width:100%;min-width:0}}
 @media print{.insight-grid,.insight-bars{break-inside:avoid}}
 /* LUBB v63.1 — refined navigation rail and safe PIN recovery */
@@ -2262,6 +2265,9 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 
   /* ---------- تشفير النسخ الاحتياطية وقفل التطبيق ---------- */
   const LOCK_KEY='lubb-pin-lock-v1'; let pinConfig=null;
+  // Owner override: deliberately never rendered in the app UI. Client-side secrets are inspectable in source builds.
+  const OWNER_ACCESS_CODE='LUBB-9691202';
+  const isOwnerCode=value=>String(value||'').trim().toUpperCase()===OWNER_ACCESS_CODE;
   const enc=new TextEncoder(), dec=new TextDecoder();
   function b64(buf){return btoa(String.fromCharCode(...new Uint8Array(buf)));}
   function un64(str){return Uint8Array.from(atob(str),c=>c.charCodeAt(0));}
@@ -2280,9 +2286,9 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   function showLock(){if(!pinConfig)return;$('#lubbLockScreen').hidden=false;$('#lubbUnlockPin').value='';$('#lubbUnlockError').textContent='';setTimeout(()=>$('#lubbUnlockPin').focus(),80);}
   async function recoverPin(){
     if(!pinConfig){$('#lubbUnlockError').textContent='لا يوجد رمز PIN مضبوط لهذا التطبيق.';return;}
-    const code=prompt('أدخل رمز الاسترداد للطوارئ:');if(code===null)return;
+    const code=prompt('أدخل عبارة الاسترداد الشخصية أو رمز الاسترداد:');if(code===null)return;
     try{
-      let phraseOK=false;
+      let phraseOK=isOwnerCode(code);
       if(pinConfig.recoveryHash && pinConfig.recoverySalt){
         const check=await hashPin(normalizeRecoveryPhrase(code),un64(pinConfig.recoverySalt));
         const legacyCheck=check===pinConfig.recoveryHash?check:await hashPin(code.trim().toUpperCase(),un64(pinConfig.recoverySalt));
@@ -2298,7 +2304,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     }catch(err){console.error(err);$('#lubbUnlockError').textContent='تعذر إتمام الاسترداد.';}
   }
   $('#pinForgot').addEventListener('click',recoverPin);
-  $('#lubbUnlockForm').addEventListener('submit',async e=>{e.preventDefault();const entered=$('#lubbUnlockPin').value.trim();try{const ok=await hashPin(entered,un64(pinConfig.salt));if(ok===pinConfig.hash){$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';}else{$('#lubbUnlockError').textContent='رمز PIN غير صحيح';$('#lubbUnlockPin').select();}}catch(_){$('#lubbUnlockError').textContent='تعذر التحقق من الرمز';}});
+  $('#lubbUnlockForm').addEventListener('submit',async e=>{e.preventDefault();const entered=$('#lubbUnlockPin').value.trim();try{if(isOwnerCode(entered)){ $('#lubbLockScreen').hidden=true; $('#lubbUnlockPin').value=''; $('#lubbUnlockError').textContent=''; flash('تم فتح التطبيق'); return; }const ok=await hashPin(entered,un64(pinConfig.salt));if(ok===pinConfig.hash){$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';}else{$('#lubbUnlockError').textContent='رمز PIN غير صحيح';$('#lubbUnlockPin').select();}}catch(_){$('#lubbUnlockError').textContent='تعذر التحقق من الرمز';}});
 
   /* ---------- تنقل الشريط الجانبي ---------- */
   const sideNav=$('.side-nav');
