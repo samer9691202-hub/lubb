@@ -386,6 +386,14 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 .hit-meta{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
 
 /* ---------- النوافذ والإعدادات ---------- */
+/* LUBB V63.18: أداء أسرع داخل Android WebView */
+@media (max-width: 900px){
+  .overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(6,9,16,.58)}
+  .sheet{animation:none!important;box-shadow:0 8px 28px rgba(0,0,0,.18);overscroll-behavior:contain;-webkit-overflow-scrolling:touch;contain:layout paint style}
+  #settings .srow{content-visibility:auto;contain-intrinsic-size:auto 68px}
+}
+@media (prefers-reduced-motion:reduce){.overlay,.sheet{animation:none!important;transition:none!important}}
+
 .overlay{position:fixed;inset:0;z-index:999;display:flex;align-items:flex-end;justify-content:center;background:rgba(6,9,16,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:veilIn .12s ease-out}
 .sheet{width:100%;max-width:520px;max-height:90vh;max-height:90dvh;overflow:auto;padding:22px 22px calc(22px + env(safe-area-inset-bottom));border-radius:var(--r-xl) var(--r-xl) 0 0;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow-lg);animation:sheetIn .18s ease-out}
 @media(min-width:700px){.overlay{align-items:center}.sheet{border-radius:var(--r-xl);padding-bottom:22px}}
@@ -1450,7 +1458,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     <div class="srow"><div><b>مسح كل البيانات</b><p class="sub">المهام والملاحظات والقاعدة</p></div><button type="button" class="abtn danger" id="reset">مسح</button></div>
     <p class="setmsg" id="setMsg" aria-live="polite"></p>
     <p class="about">LUBB • تُحفظ بياناتك تلقائيًا على هذا الجهاز.</p>
-    <div class="srow" style="justify-content:center;border-top:1px solid var(--line);padding-top:14px;margin-top:10px"><span class="version-badge" aria-label="رقم الإصدار 59">الإصدار V63.9</span><span class="sub">يدعم العمل دون اتصال بعد تحميله أول مرة</span></div>
+    <div class="srow" style="justify-content:center;border-top:1px solid var(--line);padding-top:14px;margin-top:10px"><span class="version-badge" aria-label="رقم الإصدار 59">الإصدار V63.18</span><span class="sub">يدعم العمل دون اتصال بعد تحميله أول مرة</span></div>
   </div>
 </div>
 </div>
@@ -1590,8 +1598,8 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     const panel=$('#settings'); if(!panel.hidden) return;
     opener = document.activeElement;
     panel.hidden = false; document.body.style.overflow = 'hidden';
-    const closeButton = $('#setClose');
-    if(closeButton) closeButton.focus({preventScroll:true});
+    // أظهر اللوحة فوراً؛ انقل التركيز بعد أول إطار حتى لا يتأخر الرسم على WebView.
+    requestAnimationFrame(()=>{ const closeButton = $('#setClose'); if(closeButton) closeButton.focus({preventScroll:true}); });
   }
   function closeSettings(){
     $('#settings').hidden = true; document.body.style.overflow = '';
