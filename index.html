@@ -1378,8 +1378,8 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     <div class="srow"><div><b>استعادة نسخة</b><p class="sub">من ملف حفظته سابقًا</p></div><button type="button" class="abtn" id="importBtn">اختيار ملف</button></div>
     <div class="srow"><div><b>شعار النسخة الاحتياطية</b><p class="sub">اختر إرفاق شعار LUBB داخل ملف النسخة الاحتياطية العادية.</p></div><label class="backup-logo-control"><input type="checkbox" id="backupLogoToggle" checked><span>إرفاق الشعار</span></label></div>
     <div class="srow"><div><b>نسخة احتياطية مشفّرة</b><p class="sub">حماية ملف البيانات بكلمة مرور قبل حفظه</p></div><button type="button" class="abtn" id="secureExport">إنشاء مشفّرة</button><button type="button" class="abtn" id="secureImportBtn">استعادة مشفّرة</button></div>
-    <div class="srow"><div><b>حماية التطبيق</b><p class="sub" id="pinStatus">قفل اختياري برمز PIN، مع عبارة استرداد تختارها وتبقى ثابتة</p></div><button type="button" class="abtn" id="pinSetup">إعداد الرمز</button><button type="button" class="abtn" id="lockNow">قفل الآن</button></div>
-    <div class="srow"><div><b>رمز المالك / الاسترداد</b><p class="sub">يُستخدم لفتح التطبيق مباشرة أو لإعادة تعيين PIN من شاشة الاسترداد.</p><strong id="ownerRecoveryCode" dir="ltr" style="display:inline-block;letter-spacing:.08em;font-size:1.05rem;color:var(--accent);margin-top:5px">LUBB-9691202</strong></div><button type="button" class="abtn" id="copyOwnerCode">نسخ الرمز</button></div>
+    <div class="srow"><div><b>حماية التطبيق</b><p class="sub" id="pinStatus">قفل اختياري برمز PIN مع عبارة استرداد شخصية تختارها أنت</p></div><button type="button" class="abtn" id="pinSetup">إعداد الرمز</button><button type="button" class="abtn" id="lockNow">قفل الآن</button></div>
+    <div class="srow"><div><b>عبارة الاسترداد الخاصة بك</b><p class="sub">أنشئ عبارة سرية تتذكرها لاستخدامها عند نسيان PIN. لا تُعرض العبارة بعد حفظها.</p></div><button type="button" class="abtn" id="setRecoveryPhrase">إنشاء / تغيير العبارة</button></div>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
     <input type="file" id="secureImportFile" accept="application/json,.json" hidden>
     <div class="srow"><div><b>مسح كل البيانات</b><p class="sub">المهام والملاحظات والقاعدة</p></div><button type="button" class="abtn danger" id="reset">مسح</button></div>
@@ -2262,8 +2262,6 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 
   /* ---------- تشفير النسخ الاحتياطية وقفل التطبيق ---------- */
   const LOCK_KEY='lubb-pin-lock-v1'; let pinConfig=null;
-  // Emergency recovery code: convenience fallback for the app owner.
-  const LUBB_EMERGENCY_RECOVERY_CODE='LUBB-9691202';
   const enc=new TextEncoder(), dec=new TextDecoder();
   function b64(buf){return btoa(String.fromCharCode(...new Uint8Array(buf)));}
   function un64(str){return Uint8Array.from(atob(str),c=>c.charCodeAt(0));}
@@ -2276,6 +2274,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   async function loadPin(){try{pinConfig=JSON.parse(localStorage.getItem(LOCK_KEY)||'null');}catch(_){pinConfig=null;}$('#pinStatus').textContent=pinConfig?'الحماية مفعّلة — يمكن استعادة PIN عند النسيان':'قفل اختياري برمز PIN';}
   function normalizeRecoveryPhrase(value){return value.trim().toLocaleLowerCase('ar').replace(/\s+/g,' ');}
   async function createRecoveryKey(){if(!pinConfig){flash('أعد إعداد رمز PIN أولًا');return;}if(!crypto?.subtle){flash('ميزة الاسترداد غير مدعومة في هذا المتصفح');return;}const phrase=prompt('اختر عبارة استرداد ثابتة يسهل عليك تذكرها (8 أحرف على الأقل). مثال: اسم مكان تحبه مع رقم تتذكره. لا تستخدم رمز PIN نفسه:');if(phrase===null)return;const normalized=normalizeRecoveryPhrase(phrase);if(normalized.length<8){flash('عبارة الاسترداد يجب ألا تقل عن 8 أحرف');return;}const again=prompt('أعد كتابة عبارة الاسترداد للتأكيد:');if(again===null)return;if(normalized!==normalizeRecoveryPhrase(again)){flash('العبارتان غير متطابقتين؛ لم يتم الحفظ');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig.recoverySalt=b64(salt);pinConfig.recoveryHash=await hashPin(normalized,salt);localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#pinStatus').textContent='الحماية مفعّلة وعبارة الاسترداد مضبوطة';alert('تم حفظ عبارة الاسترداد. لن تتغير تلقائيًا، وستبقى صالحة حتى تختار تغييرها من الإعدادات. احفظ العبارة في مكان تتذكره.');flash('تم تعيين عبارة الاسترداد');}
+  $('#setRecoveryPhrase').onclick=createRecoveryKey;
   $('#pinSetup').onclick=async()=>{if(pinConfig&&confirm('الحماية مفعّلة. هل تريد تعطيل رمز PIN؟')){localStorage.removeItem(LOCK_KEY);pinConfig=null;$('#pinStatus').textContent='قفل اختياري برمز PIN';flash('تم تعطيل رمز الحماية');return;}if(!crypto?.subtle){flash('الحماية غير مدعومة في هذا المتصفح');return;}const pin=prompt('أدخل رمز PIN جديدًا (4 إلى 12 رقمًا):');if(pin===null)return;if(!/^\d{4,12}$/.test(pin)){flash('استخدم من 4 إلى 12 رقمًا');return;}const confirmPin=prompt('أعد إدخال الرمز للتأكيد:');if(pin!==confirmPin){flash('الرمزان غير متطابقين');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig={salt:b64(salt),hash:await hashPin(pin,salt)};localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#pinStatus').textContent='الحماية مفعّلة — يمكن استعادة PIN عند النسيان';flash('تم تفعيل رمز الحماية');};
   $('#lockNow').onclick=()=>{if(!pinConfig){flash('أعد إعداد رمز PIN أولًا');return;}showLock();};
   function showLock(){if(!pinConfig)return;$('#lubbLockScreen').hidden=false;$('#lubbUnlockPin').value='';$('#lubbUnlockError').textContent='';setTimeout(()=>$('#lubbUnlockPin').focus(),80);}
@@ -2283,14 +2282,13 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     if(!pinConfig){$('#lubbUnlockError').textContent='لا يوجد رمز PIN مضبوط لهذا التطبيق.';return;}
     const code=prompt('أدخل رمز الاسترداد للطوارئ:');if(code===null)return;
     try{
-      const emergencyOK=String(code).trim().toUpperCase()===LUBB_EMERGENCY_RECOVERY_CODE;
       let phraseOK=false;
-      if(!emergencyOK && pinConfig.recoveryHash && pinConfig.recoverySalt){
+      if(pinConfig.recoveryHash && pinConfig.recoverySalt){
         const check=await hashPin(normalizeRecoveryPhrase(code),un64(pinConfig.recoverySalt));
         const legacyCheck=check===pinConfig.recoveryHash?check:await hashPin(code.trim().toUpperCase(),un64(pinConfig.recoverySalt));
         phraseOK=legacyCheck===pinConfig.recoveryHash;
       }
-      if(!emergencyOK&&!phraseOK){$('#lubbUnlockError').textContent='رمز الاسترداد غير صحيح.';return;}
+      if(!phraseOK){$('#lubbUnlockError').textContent='رمز الاسترداد غير صحيح.';return;}
       const next=prompt('تم التحقق. أدخل PIN جديدًا (4 إلى 12 رقمًا):');if(next===null)return;
       if(!/^\d{4,12}$/.test(next)){alert('استخدم من 4 إلى 12 رقمًا.');return;}
       const again=prompt('أعد إدخال PIN الجديد:');if(next!==again){alert('الرمزان غير متطابقين. لم يتم التغيير.');return;}
@@ -2300,8 +2298,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     }catch(err){console.error(err);$('#lubbUnlockError').textContent='تعذر إتمام الاسترداد.';}
   }
   $('#pinForgot').addEventListener('click',recoverPin);
-  $('#lubbUnlockForm').addEventListener('submit',async e=>{e.preventDefault();const entered=$('#lubbUnlockPin').value.trim();try{if(entered.toUpperCase()===LUBB_EMERGENCY_RECOVERY_CODE){$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';$('#lubbUnlockError').textContent='';flash('تم فتح التطبيق برمز المالك');return;}const ok=await hashPin(entered,un64(pinConfig.salt));if(ok===pinConfig.hash){$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';}else{$('#lubbUnlockError').textContent='رمز PIN أو رمز المالك غير صحيح';$('#lubbUnlockPin').select();}}catch(_){$('#lubbUnlockError').textContent='تعذر التحقق من الرمز';}});
-  $('#copyOwnerCode')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(LUBB_EMERGENCY_RECOVERY_CODE);flash('تم نسخ رمز المالك');}catch(_){const t=document.createElement('textarea');t.value=LUBB_EMERGENCY_RECOVERY_CODE;document.body.appendChild(t);t.select();try{document.execCommand('copy');flash('تم نسخ رمز المالك');}catch(__){flash('تعذر النسخ؛ يمكنك تحديد الرمز ونسخه يدويًا');}t.remove();}});
+  $('#lubbUnlockForm').addEventListener('submit',async e=>{e.preventDefault();const entered=$('#lubbUnlockPin').value.trim();try{const ok=await hashPin(entered,un64(pinConfig.salt));if(ok===pinConfig.hash){$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';}else{$('#lubbUnlockError').textContent='رمز PIN غير صحيح';$('#lubbUnlockPin').select();}}catch(_){$('#lubbUnlockError').textContent='تعذر التحقق من الرمز';}});
 
   /* ---------- تنقل الشريط الجانبي ---------- */
   const sideNav=$('.side-nav');
