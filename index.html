@@ -1259,7 +1259,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
       <div class="prog"><div class="prog-track"><div class="prog-fill" id="progFill"></div></div><span id="progTxt"></span></div>
       <div class="add">
         <label class="sr" for="taskInput">مهمة جديدة</label>
-        <input class="field" id="taskInput" placeholder="مهمة جديدة لهذا اليوم" autocomplete="off">
+        <input class="field" id="taskInput" placeholder="أضف مهمة إلى مهام اليوم" autocomplete="off">
         <button class="btn" id="taskAdd" aria-expanded="false">إضافة</button>
       </div>
       <div class="recurrence-row" id="taskOptions" aria-label="إعداد أولوية وتكرار المهمة" hidden>
@@ -1716,7 +1716,8 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     $('#tasksSub').textContent = '';
     $('#progFill').style.width = (total ? Math.round(done/total*100) : 0)+'%';
     $('#progTxt').textContent = done+' من '+total;
-    $('#taskInput').setAttribute('aria-label','مهمة جديدة ليوم '+ui.sel);
+    $('#taskInput').setAttribute('aria-label',ui.sel===todayKey()?'إضافة مهمة إلى مهام اليوم':'إضافة مهمة إلى اليوم المحدد');
+    $('#taskInput').placeholder = ui.sel===todayKey() ? 'أضف مهمة إلى مهام اليوم' : 'أضف مهمة إلى اليوم المحدد';
     let items = day.filter(t => ui.filter==='all' || (ui.filter==='done'?t.done:!t.done));
     items = items.slice().sort((a,b)=> a.done-b.done || (Number(b.prio)||0)-(Number(a.prio)||0));
     if(!items.length){
@@ -1756,7 +1757,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     while(cursor<=until && count<400){const date=dkey(cursor);if(!state.tasks.some(t=>t.date===date&&!t.archived&&String(t.text).trim().toLowerCase()===text.toLowerCase())){state.tasks.push({id:uid(),text,done:false,prio:Number($('#taskPriority').value)||0,date,recurrence:recurrence==='none'?'':recurrence});count++;}
       if(recurrence==='daily')cursor.setDate(cursor.getDate()+1);else if(recurrence==='weekly')cursor.setDate(cursor.getDate()+7);else if(recurrence==='monthly'){const day=cursor.getDate();cursor.setMonth(cursor.getMonth()+1);if(cursor.getDate()<day)cursor.setDate(0);}else break;
     }
-    el.value='';$('#taskPriority').value='0';$('#taskRecurrence').value='none';$('#recurrenceEndWrap').hidden=true;setTaskOptionsOpen(false);el.focus();renderAll();save();toast(recurrence==='none'?'تمت إضافة المهمة':'تم إنشاء '+count+' مهمة متكررة');
+    el.value='';$('#taskPriority').value='0';$('#taskRecurrence').value='none';$('#recurrenceEndWrap').hidden=true;setTaskOptionsOpen(false);el.focus();renderAll();save();const where=ui.sel===todayKey()?'مهام اليوم':'مهام اليوم المحدد';toast(recurrence==='none'?'تمت إضافة المهمة إلى '+where:'تم إنشاء '+count+' مهمة متكررة ضمن '+where);
   }
   $('#taskRecurrence').addEventListener('change',()=>{const v=$('#taskRecurrence').value;$('#recurrenceEndWrap').hidden=v==='none';if(v!=='none'&&!$('#taskRecurrenceEnd').value){const d=dparse(ui.sel);d.setMonth(d.getMonth()+3);$('#taskRecurrenceEnd').value=dkey(d);}});
   $('#taskAdd').onclick = addTask;
