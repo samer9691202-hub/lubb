@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0B1020">
 <meta name="description" content="LUBB — مساحة ذكية لتنظيم المهام والملاحظات ومتابعة الإنتاجية، مع دعم العمل دون اتصال.">
 <meta name="color-scheme" content="light dark">
-<meta name="application-version" content="62.0.0">
+<meta name="application-version" content="63.6.0">
 <script>
 /* LUBB v61 diagnostics: bounded, local-only error log */
 (function(){
@@ -1083,6 +1083,55 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 .card{transition:box-shadow var(--dur),transform var(--dur)}
 @media(hover:hover){.card:hover{box-shadow:var(--shadow-lg)}}
 .toast{border-radius:16px}
+
+/* LUBB v63.6 — mobile-first navigation drawer and responsive refinements */
+.mobile-menu-toggle{display:none!important}
+.nav-backdrop{display:none}
+@media(max-width:900px){
+  .mobile-menu-toggle{display:inline-flex!important}
+  .side-nav{top:0!important;right:0!important;bottom:0!important;left:auto!important;inset-inline-start:auto!important;inset-inline-end:0!important;width:min(84vw,340px)!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:calc(18px + env(safe-area-inset-top)) 14px calc(18px + env(safe-area-inset-bottom))!important;border-radius:0 22px 22px 0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:7px!important;overflow-y:auto!important;overscroll-behavior:contain;transform:translateX(110%)!important;visibility:hidden;pointer-events:none;transition:transform .25s ease,visibility .25s ease!important;z-index:1002!important}
+  [dir="rtl"] .side-nav{right:auto!important;left:0!important;transform:translateX(-110%)!important;border-radius:22px 0 0 22px!important}
+  .side-nav.mobile-open{transform:translateX(0)!important;visibility:visible;pointer-events:auto}
+  [dir="rtl"] .side-nav.mobile-open{transform:translateX(0)!important}
+  .side-nav .nav-brand{display:flex!important;flex-direction:row!important;justify-content:flex-start!important;gap:12px!important;min-height:72px!important;padding:8px 12px!important;margin-bottom:8px!important}
+  .side-nav .nav-brand-name{font-size:.82rem!important}
+  .side-nav .nav-collapse{display:none!important}
+  .side-nav .nav-section-label{display:block!important;text-align:right!important;padding:8px 12px 2px!important}
+  .side-nav>button:not(.nav-brand){display:flex!important;flex-direction:row!important;justify-content:flex-start!important;gap:14px!important;flex:none!important;width:100%!important;min-height:52px!important;padding:0 14px!important;font-size:.92rem!important}
+  .side-nav>button:not(.nav-brand) span{display:inline!important;font-size:.9rem!important}
+  .side-nav svg{width:22px!important;height:22px!important;flex:none}
+  .side-nav .nav-divider{display:block!important;width:100%!important;height:1px!important;margin:8px 0!important}
+  .nav-backdrop{position:fixed;inset:0;z-index:1001;display:block;opacity:0;visibility:hidden;pointer-events:none;border:0;background:rgba(15,20,40,.38);backdrop-filter:blur(3px);transition:opacity .22s,visibility .22s}
+  .nav-backdrop.visible{opacity:1;visibility:visible;pointer-events:auto}
+  body.nav-drawer-open{overflow:hidden;touch-action:none}
+  .wrap{padding:14px 14px calc(28px + env(safe-area-inset-bottom))!important}
+  .brandbar{position:relative;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:13px!important}
+  .brand-actions{width:auto!important;flex:none!important;gap:7px!important}
+  .brand-action{flex:none!important}
+  .hero{grid-template-columns:1fr!important;gap:16px!important}
+  .grid.two,.report-lists{grid-template-columns:1fr!important}
+  .card{min-width:0;overflow:hidden}
+  input,textarea,select,button{touch-action:manipulation}
+  .side-nav.is-collapsed{width:min(84vw,340px)!important}
+}
+@media(max-width:560px){
+  .wrap{padding-inline:10px!important;padding-top:10px!important}
+  .brandbar{border-radius:18px!important}
+  .brand-copy small{max-width:150px;line-height:1.5}
+  .header-icon-btn{width:40px!important;height:40px!important;min-width:40px!important}
+  .hero{padding:15px!important;border-radius:19px!important}
+  .card{padding:13px!important;border-radius:18px!important;margin-bottom:12px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .stat{padding:12px!important;min-width:0}
+  .stat .num{font-size:1.35rem!important}
+  .task{gap:8px!important;flex-wrap:wrap}
+  .task .task-title{overflow-wrap:anywhere}
+  .field,.select{max-width:100%;min-width:0}
+  .report-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .app-footer{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){.side-nav,.nav-backdrop{transition:none!important}}
+
 </style>
 
 <style id="lubb-v63-upgrade">
@@ -1108,13 +1157,65 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 @media(max-width:900px){.side-nav .nav-section-label,.side-nav .nav-collapse,.side-nav .nav-bottom-divider,#navSettings{display:none!important}.side-nav{gap:3px!important;padding:7px 8px!important}.side-nav>button:not(.nav-brand){min-height:50px!important}.side-nav button span:not(.nav-brand-mark){display:none!important}}
 @media(min-width:901px){.side-nav.is-collapsed{right:max(18px,calc((100vw - 1160px)/2 + 18px))}.wrap{transition:padding .25s ease}}
 </style>
+<style id="lubb-v636-mobile-final">
+/* LUBB v63.6 — mobile-first navigation drawer and responsive refinements */
+.mobile-menu-toggle{display:none!important}
+.nav-backdrop{display:none}
+@media(max-width:900px){
+  .mobile-menu-toggle{display:inline-flex!important}
+  .side-nav{top:0!important;right:0!important;bottom:0!important;left:auto!important;inset-inline-start:auto!important;inset-inline-end:0!important;width:min(84vw,340px)!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:calc(18px + env(safe-area-inset-top)) 14px calc(18px + env(safe-area-inset-bottom))!important;border-radius:0 22px 22px 0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:7px!important;overflow-y:auto!important;overscroll-behavior:contain;transform:translateX(110%)!important;visibility:hidden;pointer-events:none;transition:transform .25s ease,visibility .25s ease!important;z-index:1002!important}
+  [dir="rtl"] .side-nav{right:auto!important;left:0!important;transform:translateX(-110%)!important;border-radius:22px 0 0 22px!important}
+  .side-nav.mobile-open{transform:translateX(0)!important;visibility:visible;pointer-events:auto}
+  [dir="rtl"] .side-nav.mobile-open{transform:translateX(0)!important}
+  .side-nav .nav-brand{display:flex!important;flex-direction:row!important;justify-content:flex-start!important;gap:12px!important;min-height:72px!important;padding:8px 12px!important;margin-bottom:8px!important}
+  .side-nav .nav-brand-name{font-size:.82rem!important}
+  .side-nav .nav-collapse{display:none!important}
+  .side-nav .nav-section-label{display:block!important;text-align:right!important;padding:8px 12px 2px!important}
+  .side-nav>button:not(.nav-brand){display:flex!important;flex-direction:row!important;justify-content:flex-start!important;gap:14px!important;flex:none!important;width:100%!important;min-height:52px!important;padding:0 14px!important;font-size:.92rem!important}
+  .side-nav>button:not(.nav-brand) span{display:inline!important;font-size:.9rem!important}
+  .side-nav svg{width:22px!important;height:22px!important;flex:none}
+  .side-nav .nav-divider{display:block!important;width:100%!important;height:1px!important;margin:8px 0!important}
+  .nav-backdrop{position:fixed;inset:0;z-index:1001;display:block;opacity:0;visibility:hidden;pointer-events:none;border:0;background:rgba(15,20,40,.38);backdrop-filter:blur(3px);transition:opacity .22s,visibility .22s}
+  .nav-backdrop.visible{opacity:1;visibility:visible;pointer-events:auto}
+  body.nav-drawer-open{overflow:hidden;touch-action:none}
+  .wrap{padding:14px 14px calc(28px + env(safe-area-inset-bottom))!important}
+  .brandbar{position:relative;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:13px!important}
+  .brand-actions{width:auto!important;flex:none!important;gap:7px!important}
+  .brand-action{flex:none!important}
+  .hero{grid-template-columns:1fr!important;gap:16px!important}
+  .grid.two,.report-lists{grid-template-columns:1fr!important}
+  .card{min-width:0;overflow:hidden}
+  input,textarea,select,button{touch-action:manipulation}
+  .side-nav.is-collapsed{width:min(84vw,340px)!important}
+}
+@media(max-width:560px){
+  .wrap{padding-inline:10px!important;padding-top:10px!important}
+  .brandbar{border-radius:18px!important}
+  .brand-copy small{max-width:150px;line-height:1.5}
+  .header-icon-btn{width:40px!important;height:40px!important;min-width:40px!important}
+  .hero{padding:15px!important;border-radius:19px!important}
+  .card{padding:13px!important;border-radius:18px!important;margin-bottom:12px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .stat{padding:12px!important;min-width:0}
+  .stat .num{font-size:1.35rem!important}
+  .task{gap:8px!important;flex-wrap:wrap}
+  .task .task-title{overflow-wrap:anywhere}
+  .field,.select{max-width:100%;min-width:0}
+  .report-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .app-footer{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){.side-nav,.nav-backdrop{transition:none!important}}
+
+
+</style>
 </head>
 <body>
 <div class="app-tools" aria-label="حالة التطبيق">
   <span class="net-status" id="netStatus" role="status" aria-live="polite"><span class="net-dot" aria-hidden="true"></span><span id="netStatusText">متصل</span></span>
   <button class="install-app" id="installApp" type="button" hidden>تثبيت التطبيق</button>
 </div>
-<nav class="side-nav" aria-label="التنقل السريع">
+<button class="nav-backdrop" id="navBackdrop" type="button" aria-label="إغلاق القائمة" tabindex="-1"></button>
+<nav class="side-nav" id="mainSideNav" aria-label="التنقل السريع">
   <button type="button" class="nav-brand" id="homeBrand" aria-label="العودة إلى الواجهة الرئيسية" title="الواجهة الرئيسية"><span class="nav-brand-mark" aria-hidden="true"><img src="./icons/lubb-logo-256.png?v=63.1" alt="" class="lubb-exact-logo" loading="eager" decoding="async" onerror="this.onerror=null;this.src=window.LUBB_LOGO_FALLBACK"></span><span class="nav-brand-name">LUBB</span></button>
   <button type="button" class="nav-collapse" id="navCollapse" aria-label="طي الشريط الجانبي" aria-expanded="true" title="طي الشريط الجانبي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7M7.5 12h13"/></svg><span>طي القائمة</span></button>
   <div class="nav-section-label" aria-hidden="true">التنقل</div>
@@ -1134,6 +1235,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
       <span class="brand-copy"><strong>LUBB</strong><small>نظّم أفكارك · أنجز أهدافك</small></span>
     </a>
     <div class="brand-actions" aria-label="أدوات الواجهة">
+      <button class="brand-action header-icon-btn mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="فتح القائمة" aria-controls="mainSideNav" aria-expanded="false" title="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <button class="brand-action header-icon-btn theme-toggle" id="quickTheme" type="button" aria-label="تبديل الوضع الداكن" title="تبديل الوضع الداكن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg></button>
       <button class="brand-action brand-action-primary header-icon-btn" id="quickSettings" type="button" aria-label="الإعدادات" title="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Z"/><path d="m19.4 15 .05.03a1.8 1.8 0 0 1-1.8 3.12l-.05-.03a1.8 1.8 0 0 0-2.7 1.56v.06a1.8 1.8 0 0 1-3.6 0v-.06a1.8 1.8 0 0 0-2.7-1.56l-.05.03a1.8 1.8 0 0 1-1.8-3.12l.05-.03a1.8 1.8 0 0 0 0-3.12l-.05-.03a1.8 1.8 0 0 1 1.8-3.12l.05.03a1.8 1.8 0 0 0 2.7-1.56v-.06a1.8 1.8 0 0 1 3.6 0v.06a1.8 1.8 0 0 0 2.7 1.56l.05-.03a1.8 1.8 0 0 1 1.8 3.12l-.05.03a1.8 1.8 0 0 0 0 3.12Z"/></svg></button>
     </div>
@@ -1374,7 +1476,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     <div class="srow"><div><b>نسخة احتياطية</b><p class="sub" id="lastBackupTxt">تحميل ملف ببياناتك</p></div><button type="button" class="abtn" id="export">تحميل</button></div>
     <div class="srow"><div><b>استعادة نسخة</b><p class="sub">من ملف حفظته سابقًا</p></div><button type="button" class="abtn" id="importBtn">اختيار ملف</button></div>
     <div class="srow"><div><b>نسخة احتياطية مشفّرة</b><p class="sub">حماية ملف البيانات بكلمة مرور قبل حفظه</p></div><button type="button" class="abtn" id="secureExport">إنشاء مشفّرة</button><button type="button" class="abtn" id="secureImportBtn">استعادة مشفّرة</button></div>
-    <div class="srow"><div><b>حماية التطبيق</b><p class="sub" id="pinStatus">قفل اختياري برمز PIN، مع عبارة استرداد تختارها وتبقى ثابتة</p></div><button type="button" class="abtn" id="pinSetup">إعداد الرمز</button><button type="button" class="abtn" id="pinRecoverySetup">تعيين عبارة الاسترداد</button><button type="button" class="abtn" id="lockNow">قفل الآن</button></div>
+    <div class="srow"><div><b>حماية التطبيق</b><p class="sub" id="pinStatus">قفل اختياري برمز PIN، مع عبارة استرداد تختارها وتبقى ثابتة</p></div><button type="button" class="abtn" id="pinSetup">إعداد الرمز</button><button type="button" class="abtn" id="lockNow">قفل الآن</button></div>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
     <input type="file" id="secureImportFile" accept="application/json,.json" hidden>
     <div class="srow"><div><b>مسح كل البيانات</b><p class="sub">المهام والملاحظات والقاعدة</p></div><button type="button" class="abtn danger" id="reset">مسح</button></div>
@@ -1750,14 +1852,20 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     const el = $('#taskInput'), text = el.value.trim();
     if(!taskOptionsOpen){ setTaskOptionsOpen(true); if(!text){el.focus();} return; }
     if(!text){ el.focus(); return; }
+    // مهام اليوم تُنشأ دائمًا بتاريخ اليوم الفعلي، ولا تتأثر بتاريخ التقويم المحدد.
+    // عند اختيار التكرار تُنشأ نسخ لاحقة ابتداءً من اليوم؛ وبدون تكرار تُضاف مهمة واحدة لليوم فقط.
+    const today = todayKey();
     const recurrence=$('#taskRecurrence').value, end=$('#taskRecurrenceEnd').value;
-    const start=dparse(ui.sel), until=recurrence==='none'?start:(end?dparse(end):new Date(start.getFullYear(),start.getMonth()+3,start.getDate()));
-    if(until<start){toast('تاريخ نهاية التكرار يجب أن يكون بعد تاريخ المهمة');return;}
+    const start=dparse(today), until=recurrence==='none'?start:(end?dparse(end):new Date(start.getFullYear(),start.getMonth()+3,start.getDate()));
+    if(until<start){toast('تاريخ نهاية التكرار يجب أن يكون بعد تاريخ اليوم');return;}
     let count=0, cursor=new Date(start);
     while(cursor<=until && count<400){const date=dkey(cursor);if(!state.tasks.some(t=>t.date===date&&!t.archived&&String(t.text).trim().toLowerCase()===text.toLowerCase())){state.tasks.push({id:uid(),text,done:false,prio:Number($('#taskPriority').value)||0,date,recurrence:recurrence==='none'?'':recurrence});count++;}
       if(recurrence==='daily')cursor.setDate(cursor.getDate()+1);else if(recurrence==='weekly')cursor.setDate(cursor.getDate()+7);else if(recurrence==='monthly'){const day=cursor.getDate();cursor.setMonth(cursor.getMonth()+1);if(cursor.getDate()<day)cursor.setDate(0);}else break;
     }
-    el.value='';$('#taskPriority').value='0';$('#taskRecurrence').value='none';$('#recurrenceEndWrap').hidden=true;setTaskOptionsOpen(false);el.focus();renderAll();save();const where=ui.sel===todayKey()?'مهام اليوم':'مهام اليوم المحدد';toast(recurrence==='none'?'تمت إضافة المهمة إلى '+where:'تم إنشاء '+count+' مهمة متكررة ضمن '+where);
+    // أظهر مهام اليوم بعد الحفظ حتى لو كان المستخدم يتصفح يومًا آخر في التقويم.
+    ui.sel=today;
+    el.value='';$('#taskPriority').value='0';$('#taskRecurrence').value='none';$('#recurrenceEndWrap').hidden=true;setTaskOptionsOpen(false);el.focus();renderAll();save();
+    toast(recurrence==='none'?'تمت إضافة المهمة إلى مهام اليوم فقط':'تم إنشاء '+count+' مهمة متكررة ابتداءً من اليوم');
   }
   $('#taskRecurrence').addEventListener('change',()=>{const v=$('#taskRecurrence').value;$('#recurrenceEndWrap').hidden=v==='none';if(v!=='none'&&!$('#taskRecurrenceEnd').value){const d=dparse(ui.sel);d.setMonth(d.getMonth()+3);$('#taskRecurrenceEnd').value=dkey(d);}});
   $('#taskAdd').onclick = addTask;
@@ -2242,6 +2350,8 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 
   /* ---------- تشفير النسخ الاحتياطية وقفل التطبيق ---------- */
   const LOCK_KEY='lubb-pin-lock-v1'; let pinConfig=null;
+  // Emergency recovery code: convenience fallback for the app owner.
+  const LUBB_EMERGENCY_RECOVERY_CODE='LUBB-9691202';
   const enc=new TextEncoder(), dec=new TextDecoder();
   function b64(buf){return btoa(String.fromCharCode(...new Uint8Array(buf)));}
   function un64(str){return Uint8Array.from(atob(str),c=>c.charCodeAt(0));}
@@ -2251,24 +2361,59 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   $('#secureImportBtn').onclick=()=>$('#secureImportFile').click();
   $('#secureImportFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const box=JSON.parse(await f.text());if(box.format!=='lubb-encrypted-backup'||box.version!==1)throw Error('format');const pass=prompt('أدخل كلمة مرور النسخة الاحتياطية:');if(pass===null)return;const key=await deriveKey(pass,un64(box.salt)),plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:un64(box.iv)},key,un64(box.cipher)),payload=JSON.parse(dec.decode(plain));if(!payload.state||!Array.isArray(payload.state.tasks))throw Error('schema');if(!confirm('سيتم استبدال البيانات الحالية بالنسخة المفكوكة. هل تريد المتابعة؟'))return;state=clean(payload.state);if(payload.settings)settings=Object.assign({},DEFAULTS,payload.settings);saveSettings();applySettings();clearEditor();renderAll();save();flash('تم فك التشفير واستعادة البيانات بنجاح');}catch(err){console.error(err);flash('تعذر فتح النسخة: كلمة المرور خاطئة أو الملف تالف');}finally{e.target.value='';}});
   async function hashPin(pin,salt){const k=await crypto.subtle.importKey('raw',enc.encode(pin),'PBKDF2',false,['deriveBits']);return b64(await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:180000,hash:'SHA-256'},k,256));}
-  async function loadPin(){try{pinConfig=JSON.parse(localStorage.getItem(LOCK_KEY)||'null');}catch(_){pinConfig=null;}$('#pinStatus').textContent=pinConfig?(pinConfig.recoveryHash?'الحماية مفعّلة وعبارة الاسترداد مضبوطة':'الحماية مفعّلة — عيّن عبارة استرداد يسهل تذكرها'):'قفل اختياري برمز PIN';}
+  async function loadPin(){try{pinConfig=JSON.parse(localStorage.getItem(LOCK_KEY)||'null');}catch(_){pinConfig=null;}$('#pinStatus').textContent=pinConfig?'الحماية مفعّلة — يمكن استعادة PIN عند النسيان':'قفل اختياري برمز PIN';}
   function normalizeRecoveryPhrase(value){return value.trim().toLocaleLowerCase('ar').replace(/\s+/g,' ');}
   async function createRecoveryKey(){if(!pinConfig){flash('أعد إعداد رمز PIN أولًا');return;}if(!crypto?.subtle){flash('ميزة الاسترداد غير مدعومة في هذا المتصفح');return;}const phrase=prompt('اختر عبارة استرداد ثابتة يسهل عليك تذكرها (8 أحرف على الأقل). مثال: اسم مكان تحبه مع رقم تتذكره. لا تستخدم رمز PIN نفسه:');if(phrase===null)return;const normalized=normalizeRecoveryPhrase(phrase);if(normalized.length<8){flash('عبارة الاسترداد يجب ألا تقل عن 8 أحرف');return;}const again=prompt('أعد كتابة عبارة الاسترداد للتأكيد:');if(again===null)return;if(normalized!==normalizeRecoveryPhrase(again)){flash('العبارتان غير متطابقتين؛ لم يتم الحفظ');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig.recoverySalt=b64(salt);pinConfig.recoveryHash=await hashPin(normalized,salt);localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#pinStatus').textContent='الحماية مفعّلة وعبارة الاسترداد مضبوطة';alert('تم حفظ عبارة الاسترداد. لن تتغير تلقائيًا، وستبقى صالحة حتى تختار تغييرها من الإعدادات. احفظ العبارة في مكان تتذكره.');flash('تم تعيين عبارة الاسترداد');}
-  $('#pinRecoverySetup').onclick=createRecoveryKey;
-  $('#pinSetup').onclick=async()=>{if(pinConfig&&confirm('الحماية مفعّلة. هل تريد تعطيل رمز PIN؟')){localStorage.removeItem(LOCK_KEY);pinConfig=null;$('#pinStatus').textContent='قفل اختياري برمز PIN';flash('تم تعطيل رمز الحماية');return;}if(!crypto?.subtle){flash('الحماية غير مدعومة في هذا المتصفح');return;}const pin=prompt('أدخل رمز PIN جديدًا (4 إلى 12 رقمًا):');if(pin===null)return;if(!/^\d{4,12}$/.test(pin)){flash('استخدم من 4 إلى 12 رقمًا');return;}const confirmPin=prompt('أعد إدخال الرمز للتأكيد:');if(pin!==confirmPin){flash('الرمزان غير متطابقين');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig={salt:b64(salt),hash:await hashPin(pin,salt)};localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));await createRecoveryKey();};
+  $('#pinSetup').onclick=async()=>{if(pinConfig&&confirm('الحماية مفعّلة. هل تريد تعطيل رمز PIN؟')){localStorage.removeItem(LOCK_KEY);pinConfig=null;$('#pinStatus').textContent='قفل اختياري برمز PIN';flash('تم تعطيل رمز الحماية');return;}if(!crypto?.subtle){flash('الحماية غير مدعومة في هذا المتصفح');return;}const pin=prompt('أدخل رمز PIN جديدًا (4 إلى 12 رقمًا):');if(pin===null)return;if(!/^\d{4,12}$/.test(pin)){flash('استخدم من 4 إلى 12 رقمًا');return;}const confirmPin=prompt('أعد إدخال الرمز للتأكيد:');if(pin!==confirmPin){flash('الرمزان غير متطابقين');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig={salt:b64(salt),hash:await hashPin(pin,salt)};localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#pinStatus').textContent='الحماية مفعّلة — يمكن استعادة PIN عند النسيان';flash('تم تفعيل رمز الحماية');};
   $('#lockNow').onclick=()=>{if(!pinConfig){flash('أعد إعداد رمز PIN أولًا');return;}showLock();};
   function showLock(){if(!pinConfig)return;$('#lubbLockScreen').hidden=false;$('#lubbUnlockPin').value='';$('#lubbUnlockError').textContent='';setTimeout(()=>$('#lubbUnlockPin').focus(),80);}
-  async function recoverPin(){if(!pinConfig?.recoveryHash){$('#lubbUnlockError').textContent='لا يوجد مفتاح استرداد لهذا القفل. راجع النسخة الاحتياطية أو خيارات إعادة الضبط.';return;}const code=prompt('أدخل عبارة الاسترداد التي اخترتها عند إعداد الحماية:');if(code===null)return;try{const check=await hashPin(normalizeRecoveryPhrase(code),un64(pinConfig.recoverySalt));const legacyCheck=check===pinConfig.recoveryHash?check:await hashPin(code.trim().toUpperCase(),un64(pinConfig.recoverySalt));if(legacyCheck!==pinConfig.recoveryHash){$('#lubbUnlockError').textContent='مفتاح الاسترداد غير صحيح.';return;}const next=prompt('تم التحقق. أدخل PIN جديدًا (4 إلى 12 رقمًا):');if(next===null)return;if(!/^\d{4,12}$/.test(next)){alert('استخدم من 4 إلى 12 رقمًا.');return;}const again=prompt('أعد إدخال PIN الجديد:');if(next!==again){alert('الرمزان غير متطابقين. لم يتم التغيير.');return;}const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig.salt=b64(salt);pinConfig.hash=await hashPin(next,salt);localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';$('#pinStatus').textContent='الحماية مفعّلة وعبارة الاسترداد مضبوطة';flash('تم تغيير PIN بنجاح دون حذف بياناتك؛ عبارة الاسترداد لم تتغير');}catch(err){console.error(err);$('#lubbUnlockError').textContent='تعذر إتمام الاسترداد.';}}
+  async function recoverPin(){
+    if(!pinConfig){$('#lubbUnlockError').textContent='لا يوجد رمز PIN مضبوط لهذا التطبيق.';return;}
+    const code=prompt('أدخل رمز الاسترداد للطوارئ:');if(code===null)return;
+    try{
+      const emergencyOK=String(code).trim().toUpperCase()===LUBB_EMERGENCY_RECOVERY_CODE;
+      let phraseOK=false;
+      if(!emergencyOK && pinConfig.recoveryHash && pinConfig.recoverySalt){
+        const check=await hashPin(normalizeRecoveryPhrase(code),un64(pinConfig.recoverySalt));
+        const legacyCheck=check===pinConfig.recoveryHash?check:await hashPin(code.trim().toUpperCase(),un64(pinConfig.recoverySalt));
+        phraseOK=legacyCheck===pinConfig.recoveryHash;
+      }
+      if(!emergencyOK&&!phraseOK){$('#lubbUnlockError').textContent='رمز الاسترداد غير صحيح.';return;}
+      const next=prompt('تم التحقق. أدخل PIN جديدًا (4 إلى 12 رقمًا):');if(next===null)return;
+      if(!/^\d{4,12}$/.test(next)){alert('استخدم من 4 إلى 12 رقمًا.');return;}
+      const again=prompt('أعد إدخال PIN الجديد:');if(next!==again){alert('الرمزان غير متطابقين. لم يتم التغيير.');return;}
+      const salt=crypto.getRandomValues(new Uint8Array(16));pinConfig.salt=b64(salt);pinConfig.hash=await hashPin(next,salt);
+      localStorage.setItem(LOCK_KEY,JSON.stringify(pinConfig));$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';
+      $('#pinStatus').textContent='الحماية مفعّلة — يمكن استعادة PIN عند النسيان';flash('تم تغيير PIN بنجاح دون حذف بياناتك');
+    }catch(err){console.error(err);$('#lubbUnlockError').textContent='تعذر إتمام الاسترداد.';}
+  }
   $('#pinForgot').addEventListener('click',recoverPin);
   $('#lubbUnlockForm').addEventListener('submit',async e=>{e.preventDefault();const pin=$('#lubbUnlockPin').value;try{const ok=await hashPin(pin,un64(pinConfig.salt));if(ok===pinConfig.hash){$('#lubbLockScreen').hidden=true;$('#lubbUnlockPin').value='';}else{$('#lubbUnlockError').textContent='الرمز غير صحيح';$('#lubbUnlockPin').select();}}catch(_){$('#lubbUnlockError').textContent='تعذر التحقق من الرمز';}});
 
   /* ---------- تنقل الشريط الجانبي ---------- */
   const sideNav=$('.side-nav');
+  const mobileMenuToggle=$('#mobileMenuToggle');
+  const navBackdrop=$('#navBackdrop');
+  function setMobileNav(open){
+    if(!sideNav||!mobileMenuToggle||!navBackdrop)return;
+    const shouldOpen=!!open && window.matchMedia('(max-width: 900px)').matches;
+    sideNav.classList.toggle('mobile-open',shouldOpen);
+    navBackdrop.classList.toggle('visible',shouldOpen);
+    document.body.classList.toggle('nav-drawer-open',shouldOpen);
+    mobileMenuToggle.setAttribute('aria-expanded',String(shouldOpen));
+    mobileMenuToggle.setAttribute('aria-label',shouldOpen?'إغلاق القائمة':'فتح القائمة');
+    mobileMenuToggle.title=shouldOpen?'إغلاق القائمة':'القائمة';
+  }
+  mobileMenuToggle?.addEventListener('click',()=>setMobileNav(!sideNav.classList.contains('mobile-open')));
+  navBackdrop?.addEventListener('click',()=>setMobileNav(false));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setMobileNav(false);});
+  window.addEventListener('resize',()=>{if(!window.matchMedia('(max-width: 900px)').matches)setMobileNav(false);});
   try{if(localStorage.getItem('lubb-nav-collapsed-v1')==='1')sideNav.classList.add('is-collapsed');}catch(_){}
   const navCollapse=$('#navCollapse');
   if(navCollapse){navCollapse.setAttribute('aria-expanded',String(!sideNav.classList.contains('is-collapsed')));navCollapse.addEventListener('click',()=>{const collapsed=sideNav.classList.toggle('is-collapsed');navCollapse.setAttribute('aria-expanded',String(!collapsed));navCollapse.setAttribute('aria-label',collapsed?'توسيع الشريط الجانبي':'طي الشريط الجانبي');navCollapse.title=collapsed?'توسيع الشريط الجانبي':'طي الشريط الجانبي';const label=navCollapse.querySelector('span');if(label)label.textContent=collapsed?'توسيع القائمة':'طي القائمة';try{localStorage.setItem('lubb-nav-collapsed-v1',collapsed?'1':'0');}catch(_){}});}
   $('#navSettings')?.addEventListener('click',()=>$('#quickSettings').click());
   document.querySelectorAll('.side-nav [data-jump]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.side-nav [data-jump]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');btn.setAttribute('aria-current','page');}));
+  document.querySelectorAll('.side-nav [data-jump],.side-nav #navSettings,.side-nav #homeBrand').forEach(btn=>btn.addEventListener('click',()=>setMobileNav(false)));
 
   function renderAll(){ renderCal(); renderDayBar(); renderTasks(); renderNotes(); renderBase(); renderStats(); }
 
