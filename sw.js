@@ -1,7 +1,7 @@
 /* LUBB v63.1 — unified logo & icon assets */
-const CACHE='lubb-v63.14-recovery-landscape';
+const CACHE='lubb-v63.20-performance';
 const BASE=self.registration.scope;
-const CORE=['./','./index.html','./manifest.webmanifest?v=63.6','./favicon.ico?v=63.6','./icons/fav-16.png?v=63.6','./icons/fav-32.png?v=63.6','./icons/fav-48.png?v=63.6','./icons/lubb-logo-256.png?v=63.6','./icons/icon-192.png?v=63.6','./icons/icon-512.png?v=63.6','./icons/icon-maskable-512.png?v=63.6','./icons/apple-touch-icon.png?v=63.6'].map(x=>new URL(x,BASE).href);
+const CORE=['./','./index.html','./manifest.webmanifest','./fav-16.png','./fav-32.png','./fav-48.png','./lubb-logo-256.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png'].map(x=>new URL(x,BASE).href);
 /* كل ملف يُخزَّن على حدة: فشل ملف واحد لا يُفشل تثبيت العامل كاملًا */
 self.addEventListener('install',e=>e.waitUntil((async()=>{
   const c=await caches.open(CACHE);

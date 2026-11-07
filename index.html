@@ -2299,7 +2299,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   $('#export').onclick = doExport;
   $('#bbDownload').onclick = doExport;
   $('#bbLater').onclick = ()=>{ bk.snoozeUntil = Date.now() + BK_SNOOZE; saveBackupMeta(); updateBackupUI(); };
-  setInterval(updateBackupUI, 5*60*1000);
+  setInterval(()=>{ if(!document.hidden) updateBackupUI(); }, 5*60*1000);
   document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) updateBackupUI(); });
   $('#importBtn').onclick = ()=> $('#importFile').click();
   $('#importFile').addEventListener('change', async e=>{
@@ -2648,17 +2648,20 @@ if('serviceWorker' in navigator){
 </script>
 
 <script id="lubb-official-brand-lock">
-/* شعار LUBB: ملف واحد للتطبيق + نسخة احتياطية مضمّنة إذا تعذّر تحميل الملف. */
+/* Apply the logo only to newly inserted images; avoid rescanning the whole DOM. */
 (()=>{
  const logo=new URL(window.LUBB_LOGO_SRC,document.baseURI).href;
  const fallback=window.LUBB_LOGO_FALLBACK;
- const apply=()=>document.querySelectorAll('img.lubb-exact-logo,[data-lubb-logo]').forEach(img=>{
+ const selector='img.lubb-exact-logo,[data-lubb-logo]';
+ const bind=img=>{
+   if(!(img instanceof HTMLImageElement))return;
    if(img.dataset.lubbLogoBound!=='1'){img.dataset.lubbLogoBound='1';img.addEventListener('error',()=>{if(img.src!==fallback)img.src=fallback;});}
    if(img.src!==fallback && img.getAttribute('src')!==logo && img.src!==logo)img.setAttribute('src',logo);
-   img.removeAttribute('srcset');img.hidden=false;img.loading='eager';img.decoding='async';
- });
- apply();document.addEventListener('DOMContentLoaded',apply);
- new MutationObserver(apply).observe(document.documentElement,{childList:true,subtree:true});
+   img.removeAttribute('srcset');img.hidden=false;img.loading='lazy';img.decoding='async';
+ };
+ const scan=root=>{if(root.nodeType!==1)return;if(root.matches?.(selector))bind(root);root.querySelectorAll?.(selector).forEach(bind);};
+ scan(document.documentElement);
+ new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)scan(node);}).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
 </body>
