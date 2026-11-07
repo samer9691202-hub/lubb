@@ -386,7 +386,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 .hit-meta{font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
 
 /* ---------- النوافذ والإعدادات ---------- */
-/* LUBB V63.18: أداء أسرع داخل Android WebView */
+/* LUBB V63.21: استجابة أسرع للإعدادات داخل Android WebView */
 @media (max-width: 900px){
   .overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(6,9,16,.58)}
   .sheet{animation:none!important;box-shadow:0 8px 28px rgba(0,0,0,.18);overscroll-behavior:contain;-webkit-overflow-scrolling:touch;contain:layout paint style}
@@ -395,7 +395,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.overlay,.sheet{animation:none!important;transition:none!important}}
 
 .overlay{position:fixed;inset:0;z-index:999;display:flex;align-items:flex-end;justify-content:center;background:rgba(6,9,16,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:veilIn .12s ease-out}
-.sheet{width:100%;max-width:520px;max-height:90vh;max-height:90dvh;overflow:auto;padding:22px 22px calc(22px + env(safe-area-inset-bottom));border-radius:var(--r-xl) var(--r-xl) 0 0;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow-lg);animation:sheetIn .18s ease-out}
+.sheet{width:100%;max-width:520px;max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;padding:22px 22px calc(22px + env(safe-area-inset-bottom));border-radius:var(--r-xl) var(--r-xl) 0 0;background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow-lg);animation:sheetIn .18s ease-out}
 @media(min-width:700px){.overlay{align-items:center}.sheet{border-radius:var(--r-xl);padding-bottom:22px}}
 .sheet h2{font-size:1.2rem}
 .sheet-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
@@ -1458,7 +1458,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     <div class="srow"><div><b>مسح كل البيانات</b><p class="sub">المهام والملاحظات والقاعدة</p></div><button type="button" class="abtn danger" id="reset">مسح</button></div>
     <p class="setmsg" id="setMsg" aria-live="polite"></p>
     <p class="about">LUBB • تُحفظ بياناتك تلقائيًا على هذا الجهاز.</p>
-    <div class="srow" style="justify-content:center;border-top:1px solid var(--line);padding-top:14px;margin-top:10px"><span class="version-badge" aria-label="رقم الإصدار 59">الإصدار V63.18</span><span class="sub">يدعم العمل دون اتصال بعد تحميله أول مرة</span></div>
+    <div class="srow" style="justify-content:center;border-top:1px solid var(--line);padding-top:14px;margin-top:10px"><span class="version-badge" aria-label="رقم الإصدار 59">الإصدار V63.21</span><span class="sub">يدعم العمل دون اتصال بعد تحميله أول مرة</span></div>
   </div>
 </div>
 </div>
@@ -1578,20 +1578,23 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   }
   if(window.matchMedia){
     const scheme=window.matchMedia('(prefers-color-scheme: dark)');
-    const onSchemeChange=()=>{ if(settings.theme==='auto') applySettings(); };
+    const onSchemeChange=()=>{ if(settings.theme==='auto') applySettings('theme'); };
     if(scheme.addEventListener) scheme.addEventListener('change',onSchemeChange); else if(scheme.addListener) scheme.addListener(onSchemeChange);
   }
-  function applySettings(){
+  // تحديث الإعدادات حسب الجزء المتأثر فقط؛ لا نعيد بناء التقويم عند تغيير اللون مثلاً.
+  function applySettings(changedKey){
     const r = document.documentElement;
     const effectiveTheme = settings.theme==='auto' ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light') : settings.theme;
-    r.setAttribute('data-theme', effectiveTheme);
+    if(r.getAttribute('data-theme') !== effectiveTheme) r.setAttribute('data-theme', effectiveTheme);
     updateThemeIcons(effectiveTheme);
     document.querySelectorAll('#settings [data-setting]').forEach(g=>{
       const k = g.dataset.setting;
       if(g.classList.contains('sw')) g.setAttribute('aria-checked', String(!!settings[k]));
       else g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', String(String(settings[k])===b.dataset.val)));
     });
-    tick(); renderCal();
+    // عند التشغيل أو الاستعادة نحدّث كل العناصر، أما التغيير اليدوي فيحدّث المطلوب فقط.
+    if(!changedKey || changedKey==='clockFmt' || changedKey==='showSec' || changedKey==='showHijri') tick();
+    if(!changedKey || changedKey==='weekStart') renderCal();
   }
   let opener = null;
   function openSettings(){
@@ -1608,7 +1611,7 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   // الإعدادات تستخدم نفس آلية استجابة أزرار الواجهة: نقرة واحدة واضحة ومتوافقة مع اللمس والماوس ولوحة المفاتيح.
   const settingsButton = $('#quickSettings');
   settingsButton?.addEventListener('click', openSettings);
-  $('#quickTheme')?.addEventListener('click',()=>{ const current=document.documentElement.getAttribute('data-theme') || 'light'; settings.theme=current==='dark'?'light':'dark'; saveSettings(); applySettings(); toast(settings.theme==='dark'?'تم تفعيل الوضع الداكن':'تم تفعيل الوضع الفاتح'); });
+  $('#quickTheme')?.addEventListener('click',()=>{ const current=document.documentElement.getAttribute('data-theme') || 'light'; settings.theme=current==='dark'?'light':'dark'; saveSettings(); applySettings('theme'); toast(settings.theme==='dark'?'تم تفعيل الوضع الداكن':'تم تفعيل الوضع الفاتح'); });
   $('#setClose').addEventListener('click', closeSettings);
   document.querySelector('.side-nav').addEventListener('click',e=>{const b=e.target.closest('[data-jump]');if(!b)return;const target=document.getElementById(b.dataset.jump);if(!target)return;const jump=()=>{const isList=b.dataset.jump==='tasks'||b.dataset.jump==='notes';const offset=isList?Math.max(104,($('#dayZone .daybox')?.getBoundingClientRect().height||72)+22):18;const top=window.scrollY+target.getBoundingClientRect().top-offset;window.scrollTo({top:Math.max(0,top),behavior:'smooth'});};if(b.dataset.jump==='tasks'||b.dataset.jump==='notes'){openDay(todayKey(),{reset:true});requestAnimationFrame(()=>requestAnimationFrame(jump));}else target.scrollIntoView({behavior:'smooth',block:'start'});});
   document.getElementById('homeBrand')?.addEventListener('click',()=>{const home=document.querySelector('.hero')||document.querySelector('.wrap');if(home){home.scrollIntoView({behavior:'smooth',block:'start'});window.scrollTo({top:0,behavior:'smooth'});}});
@@ -1616,10 +1619,10 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
   $('#settings').addEventListener('click', e=>{
     if(e.target.id==='settings'){ closeSettings(); return; }
     const sw = e.target.closest('.sw');
-    if(sw){ const k = sw.dataset.setting; settings[k] = !settings[k]; saveSettings(); applySettings(); return; }
+    if(sw){ const k = sw.dataset.setting; settings[k] = !settings[k]; saveSettings(); applySettings(k); return; }
     const b = e.target.closest('.seg button'); if(!b) return;
     const g = b.closest('[data-setting]'); if(!g) return;
-    settings[g.dataset.setting] = b.dataset.val; saveSettings(); applySettings();
+    settings[g.dataset.setting] = b.dataset.val; saveSettings(); applySettings(g.dataset.setting);
   });
 
   /* ---------- الساعة والتاريخ ---------- */
@@ -1662,12 +1665,14 @@ button.chip:hover{border-color:var(--line-2);color:var(--ink)}
     return m;
   }
   function renderCal(){
-    const y = ui.calY, mo = ui.calM, info = dayInfo(), tk = todayKey();
+    const y = ui.calY, mo = ui.calM;
     $('#monthPanel').hidden = !ui.calExpanded;
     $('#toggleCal').innerHTML = ui.calExpanded ? 'إخفاء<span class="lg"> الشهر</span>' : '<span class="lg">عرض </span>الشهر';
     $('#toggleCal').setAttribute('aria-label', ui.calExpanded ? 'إخفاء الشهر' : 'عرض الشهر');
     $('#toggleCal').setAttribute('aria-expanded', String(ui.calExpanded));
+    // لا نحسب إحصاءات جميع المهام والملاحظات ما دام التقويم الشهري مغلقاً.
     if(!ui.calExpanded) return;
+    const info = dayInfo(), tk = todayKey();
     $('#calTitle').textContent = fMonth.format(new Date(y,mo,1));
     const monthKeys = Object.keys(info).filter(k=>{const d=dparse(k);return d.getFullYear()===y && d.getMonth()===mo;});
     const monthTasks = state.tasks.filter(t=>{const d=dparse(t.date);return d.getFullYear()===y && d.getMonth()===mo;});
