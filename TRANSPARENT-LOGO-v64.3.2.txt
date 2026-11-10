@@ -1,0 +1,2 @@
+LUBB V64.3.2 - Transparent official logo
+Replaced app logo assets with transparent PNGs, updated favicon/Apple touch/PWA icons and embedded fallback logo, and bumped cache/version references.
