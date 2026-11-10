@@ -1,0 +1,9 @@
+LUBB V64.2.4 — First-paint color flash fix
+
+- Replaced the initial fallback purple/blue CSS palette with the current warm ivory/gold LUBB palette.
+- The first rendered frame now starts with the same palette as the redesigned interface, rather than waiting for later theme overrides.
+- Updated browser theme-color metadata for light and dark modes.
+- Bumped the service-worker cache to lubb-v64.2.4 so older cached HTML is retired after activation.
+- Existing V64.2.3 layout, including the V64.0.2 landscape behavior, remains unchanged.
+
+Validation: JavaScript syntax and ZIP integrity checked. Actual AppMint/WebView visual test still required.

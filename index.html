@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#F1EFEA">
 <meta name="description" content="LUBB — مساحة ذكية لتنظيم المهام والملاحظات ومتابعة الإنتاجية، مع دعم العمل دون اتصال.">
 <meta name="color-scheme" content="light dark">
-<meta name="application-version" content="64.1.0">
+<meta name="application-version" content="64.2.4">
 <script>
 /* LUBB v61 diagnostics: bounded, local-only error log */
 (function(){
@@ -41,17 +41,18 @@
 :root{
   --font:"Tajawal",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
   --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:26px;
-  --bg:#F1F5F9;--bg-glow:rgba(124,58,237,.12);
-  --surface:#FFFFFF;--surface-2:#F5F6FB;--surface-3:#E9ECF5;
-  --line:rgba(18,24,43,.08);--line-2:rgba(18,24,43,.15);
-  --ink:#12151F;--ink-2:#323951;--muted:#6C7490;
-  --accent:#7C3AED;--accent-2:#3B82F6;--accent-ink:#FFFFFF;--accent-soft:rgba(124,58,237,.11);--accent-line:rgba(124,58,237,.38);
-  --ok:#0EA877;--ok-soft:rgba(14,168,119,.12);
-  --warn:#D98A06;--warn-soft:rgba(217,138,6,.13);
-  --rose:#E5365B;--rose-soft:rgba(229,54,91,.11);
-  --hero-a:#7C3AED;--hero-b:#3B82F6;
-  --shadow:0 1px 2px rgba(18,24,43,.04),0 10px 30px -12px rgba(18,24,43,.14);
-  --shadow-lg:0 24px 60px -18px rgba(18,24,43,.35);
+  /* First-paint palette: match the active warm LUBB identity before app scripts run. */
+  --bg:#F1EFEA;--bg-glow:rgba(226,190,35,.08);
+  --surface:#FFFFFF;--surface-2:#F8F6F1;--surface-3:#EEECE6;
+  --line:rgba(43,42,37,.075);--line-2:rgba(43,42,37,.14);
+  --ink:#262622;--ink-2:#55544D;--muted:#89877E;
+  --accent:#E9BF16;--accent-2:#F4D75A;--accent-ink:#25241F;--accent-soft:rgba(233,191,22,.15);--accent-line:rgba(205,163,0,.35);
+  --ok:#4B9673;--ok-soft:rgba(75,150,115,.12);
+  --warn:#D49A22;--warn-soft:rgba(212,154,34,.13);
+  --rose:#C96D63;--rose-soft:rgba(201,109,99,.12);
+  --hero-a:#FFFFFF;--hero-b:#F8F6F0;
+  --shadow:0 5px 22px rgba(58,53,40,.055),0 1px 2px rgba(58,53,40,.035);
+  --shadow-lg:0 16px 42px rgba(58,53,40,.09);
   color-scheme:light;
 }
 :root[data-theme="dark"]{
@@ -1588,7 +1589,7 @@ img{max-width:100%}
   function saveSettings(){ store.set('plan-settings-v1', JSON.stringify(settings)); }
   function updateThemeIcons(theme){
     /* الأيقونات ثابتة وموحّدة؛ نغيّر فقط لون شريط المتصفح */
-    const meta=document.querySelector('meta[name="theme-color"]'); if(meta) meta.content = theme === 'light' ? '#F2F3F8' : '#0A0C12';
+    const meta=document.querySelector('meta[name="theme-color"]'); if(meta) meta.content = theme === 'light' ? '#F1EFEA' : '#191A18';
   }
   if(window.matchMedia){
     const scheme=window.matchMedia('(prefers-color-scheme: dark)');

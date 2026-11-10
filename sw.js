@@ -1,5 +1,5 @@
 /* LUBB v64.2.3 — cache version aligned with the application release. */
-const CACHE='lubb-v64.2.1';
+const CACHE='lubb-v64.2.4';
 const BASE=self.registration.scope;
 const CORE=['./','./index.html','./manifest.webmanifest','./favicon.ico','./apple-touch-icon.png','./fav-16.png','./fav-32.png','./fav-48.png','./lubb-logo-256.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png'].map(x=>new URL(x,BASE).href);
 
