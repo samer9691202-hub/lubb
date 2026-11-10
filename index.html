@@ -1,5 +1,61 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f7f9"><title>LUBB</title><link rel="stylesheet" href="styles.css"></head><body>
-<div class="app"><aside class="sidebar" id="sidebar"><div class="brand"><b class="logo">l</b><span><strong>LUBB</strong><small>مساحة عملك</small></span><button id="closeNav" class="mobile">×</button></div><div class="space">◉　مساحتي الشخصية　⌄</div><label>مساحة العمل</label><nav><button class="active" data-page="today">◷　اليوم <i id="badge">0</i></button><button data-page="upcoming">▦　القادم</button><button data-page="inbox">↳　الوارد</button><button data-page="all">☷　كل المهام</button></nav><label>قوائمي</label><nav><button data-page="work">●　مشاريع العمل</button><button data-page="personal">●　شخصي</button><button data-page="ideas">●　أفكار لاحقاً</button></nav><label>أدواتك</label><nav><button data-page="calendar">▦　التقويم</button><button data-page="notes">▤　الملاحظات</button><button data-page="reminders">◉　التذكيرات</button><button data-page="archive">▱　الأرشيف</button></nav><div class="bottom"><div class="status">●　بيانات محفوظة على الجهاز</div><nav><button data-page="settings">⚙　الإعدادات</button></nav><div class="profile">م　 <span><b>مساحتي</b><small>الحساب الشخصي</small></span></div></div></aside><div id="scrim"></div>
-<main><header><button id="menu" class="mobile">☰</button><span class="crumb">مساحتي الشخصية　/　<b id="crumb">اليوم</b></span><div><button id="search">⌕　بحث</button><button data-page="reminders">♧</button></div></header><section class="content"><div class="heading"><div><small id="date"></small><h1 id="title">اليوم</h1><p id="desc">رتّب أولوياتك وابدأ بما يهم.</p></div><button class="primary" id="add">＋ مهمة جديدة</button></div><div id="view"></div><footer>● بياناتك محفوظة محلياً على هذا الجهاز</footer></section></main></div>
-<dialog id="taskDialog"><form id="taskForm" method="dialog"><h2>مهمة جديدة <button type="button" id="taskClose">×</button></h2><input id="taskTitle" required placeholder="ما الذي تريد إنجازه؟"><textarea id="taskDetails" placeholder="تفاصيل اختيارية"></textarea><div class="fields"><input id="taskDate" type="date"><select id="taskPriority"><option value="normal">عادية</option><option value="high">عالية</option><option value="low">منخفضة</option></select></div><select id="taskList"><option value="work">مشاريع العمل</option><option value="personal">شخصي</option><option value="ideas">أفكار لاحقاً</option><option value="inbox">الوارد</option></select><div class="actions"><button type="button" id="taskCancel">إلغاء</button><button class="primary">حفظ المهمة</button></div></form></dialog>
-<dialog id="noteDialog"><form id="noteForm" method="dialog"><h2>ملاحظة <button type="button" id="noteClose">×</button></h2><input id="noteTitle" required placeholder="عنوان الملاحظة"><textarea id="noteBody" rows="7" placeholder="اكتب ملاحظتك هنا"></textarea><div class="actions"><button type="button" id="noteCancel">إلغاء</button><button class="primary">حفظ الملاحظة</button></div></form></dialog><div id="toast"></div><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f6f8fb"><meta name="description" content="LUBB — مساحة هادئة لتنظيم يومك ومهامك وأفكارك.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
+<title>LUBB — نظّم يومك</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark">L</div><span>LUBB</span><button class="icon-btn mobile-close" id="closeSidebar" aria-label="إغلاق">×</button></div>
+    <button class="workspace"><span class="avatar">ل</span><span class="workspace-copy"><b>مساحتي</b><small>مساحة العمل الشخصية</small></span><span class="chevron">⌄</span></button>
+    <div class="side-label">مساحة العمل</div>
+    <nav class="nav-list">
+      <button class="nav-item active" data-view="today"><span class="nav-icon">◷</span><span>اليوم</span><em id="todayCount">0</em></button>
+      <button class="nav-item" data-view="upcoming"><span class="nav-icon">▦</span><span>القادم</span><em id="upcomingCount">0</em></button>
+      <button class="nav-item" data-view="all"><span class="nav-icon">☷</span><span>كل المهام</span><em id="allCount">0</em></button>
+      <button class="nav-item" data-view="important"><span class="nav-icon">☆</span><span>المهمة</span><em id="importantCount">0</em></button>
+    </nav>
+    <div class="side-label side-label-row"><span>مساحتي</span><button class="tiny-add" id="newList" title="قائمة جديدة">＋</button></div>
+    <nav class="nav-list" id="customLists"><button class="nav-item" data-view="notes"><span class="nav-icon">▤</span><span>الملاحظات</span></button><button class="nav-item" data-view="calendar"><span class="nav-icon">▦</span><span>التقويم</span></button></nav>
+    <div class="sidebar-bottom">
+      <button class="nav-item" data-view="archive"><span class="nav-icon">▣</span><span>الأرشيف</span></button>
+      <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span><span>الإعدادات</span></button>
+      <div class="side-foot"><span class="status-dot"></span> بياناتك محفوظة على هذا الجهاز</div>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="openSidebar" aria-label="القائمة">☰</button>
+      <div class="breadcrumb"><span>مساحتي</span><b>/</b><strong id="crumb">اليوم</strong></div>
+      <div class="top-actions"><button class="icon-btn" id="searchToggle" title="بحث">⌕</button><button class="icon-btn" id="themeToggle" title="تغيير المظهر">◐</button><button class="user-chip"><span class="avatar small">ل</span><span>حسابي</span></button></div>
+    </header>
+    <section class="content">
+      <div class="search-wrap hidden" id="searchWrap"><input id="searchInput" placeholder="ابحث في المهام والملاحظات..." autocomplete="off"><button class="icon-btn" id="searchClose">×</button></div>
+      <div id="viewRoot"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<dialog id="taskDialog" class="modal">
+ <form method="dialog" id="taskForm">
+  <div class="modal-head"><div><span class="eyebrow">مهمة جديدة</span><h2>أضف إلى يومك</h2></div><button class="icon-btn" value="cancel">×</button></div>
+  <label>عنوان المهمة<input id="taskTitle" required maxlength="120" placeholder="ما الذي تريد إنجازه؟"></label>
+  <label>التاريخ<input id="taskDate" type="date"></label>
+  <label>الأولوية<select id="taskPriority"><option value="normal">عادية</option><option value="high">مهمة</option><option value="low">منخفضة</option></select></label>
+  <label>تفاصيل <textarea id="taskDetail" rows="3" placeholder="تفاصيل اختيارية..."></textarea></label>
+  <div class="modal-actions"><button class="btn ghost" value="cancel">إلغاء</button><button class="btn primary" id="saveTask" value="default">حفظ المهمة</button></div>
+ </form>
+</dialog>
+<dialog id="noteDialog" class="modal">
+ <form method="dialog" id="noteForm">
+  <div class="modal-head"><div><span class="eyebrow">مساحة الأفكار</span><h2>ملاحظة جديدة</h2></div><button class="icon-btn" value="cancel">×</button></div>
+  <label>العنوان<input id="noteTitle" required maxlength="120" placeholder="عنوان الملاحظة"></label>
+  <label>المحتوى<textarea id="noteBody" rows="7" placeholder="اكتب فكرتك هنا..."></textarea></label>
+  <div class="modal-actions"><button class="btn ghost" value="cancel">إلغاء</button><button class="btn primary" id="saveNote" value="default">حفظ الملاحظة</button></div>
+ </form>
+</dialog>
+<script src="app.js"></script>
+</body></html>
