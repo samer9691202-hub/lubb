@@ -1,0 +1,7 @@
+LUBB V64.2.1 — Phone landscape layout fix
+
+- Landscape phones (viewport width <= 900px and height <= 600px) now use a compact vertical icon rail on the right.
+- Navigation labels and branding are hidden in this constrained orientation to preserve usable content height.
+- Main content padding, header, clock, cards, statistics and settings sheet are compacted for short landscape viewports.
+- Portrait phone and tablet/desktop layouts are not targeted by this override.
+- App functions, local data, theme colors, printing/export layouts and V64.0.2 performance changes are retained.
