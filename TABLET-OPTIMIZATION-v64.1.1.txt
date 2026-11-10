@@ -1,0 +1,10 @@
+LUBB V64.1.1 — Tablet layout optimization
+
+- Added dedicated tablet portrait layout with a full-width hero and balanced two-column content areas.
+- Added dedicated tablet landscape layout with a compact 5/7 dashboard split and reserved space for the right navigation rail.
+- Improved card and statistic grid sizing to prevent narrow or stretched content.
+- Preserved existing features, data handling, colors, visual identity, and print/export styles.
+- Preserved V64.0.2 Android/WebView performance optimizations.
+- Service worker cache version updated to lubb-v64.1.1.
+
+Validation: inline JavaScript syntax and ZIP integrity checked. Real-device AppMint tablet testing is still required.

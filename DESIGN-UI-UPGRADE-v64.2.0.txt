@@ -1,0 +1,20 @@
+LUBB V64.2.0 — Interface and component refinement
+
+Changes:
+- Refined the desktop side rail: clearer hierarchy, larger touch targets, active-state treatment, and improved collapsed width.
+- Refined brand header and action controls.
+- Unified card radii, borders, spacing, headings, and shadows.
+- Improved clock/reminders feature panel and reminder entry surface.
+- Refined statistics tiles, task/note/list cards, fields, and buttons.
+- Responsive adjustments for tablet landscape, tablet portrait, and phones.
+
+Preserved:
+- Existing app structure, sections, controls, IDs, and JavaScript behavior.
+- Local data and storage behavior.
+- V64.0.2 Android performance optimizations.
+- Existing print/export styles (new visual rules are screen-only).
+
+Validation:
+- All 8 inline JavaScript blocks pass Node syntax compilation.
+- ZIP integrity checked after packaging.
+- Not yet runtime-tested inside AppMint on physical devices.
