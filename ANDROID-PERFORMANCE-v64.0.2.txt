@@ -1,0 +1,11 @@
+LUBB V64.0.2 — Android / AppMint performance patch
+
+Changes:
+1. Unified the main dashboard clock and reminder clock on one shared one-second tick, removing a redundant independent one-second interval.
+2. Paused the main clock and reminder polling while the app is backgrounded; refreshes immediately when the app becomes visible again.
+3. Reduced costly backdrop blur rendering on touch devices / Android WebView while preserving layout, colors, content, and app functions.
+4. Reduced selected heavy card shadows on touch devices.
+5. Updated the service-worker cache name to lubb-v64.0.2 to ensure the updated app shell is cached.
+
+Validation performed: ZIP integrity check and JavaScript syntax checks for all inline script blocks.
+Not performed: real-device runtime profiling or AppMint APK testing. Please install this ZIP as the web project source and test on the same Android device.

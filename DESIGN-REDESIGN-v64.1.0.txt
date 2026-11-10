@@ -1,0 +1,23 @@
+LUBB V64.1.0 — Quest-inspired dashboard visual redesign
+
+Base: LUBB V64.0.2 Android lag-fix build.
+
+Visual direction adapted from the supplied reference image:
+- Warm ivory / light beige application background.
+- Clean white cards with rounded corners and restrained soft shadows.
+- Charcoal typography and muted gray secondary text.
+- Warm yellow / gold accent for primary actions and active states.
+- Desktop dashboard composition: calendar and summary column on the right; clock and work area on the left.
+- Responsive stacked layout and bottom navigation on smaller screens.
+- Dark mode recolored to a coordinated warm charcoal / gold palette.
+
+Preserved:
+- Existing LUBB sections, controls, local storage, reminder and task logic.
+- Existing PWA/offline files and Android performance optimizations from V64.0.2.
+- Print/export styling is outside the screen-only redesign rules.
+
+Validation:
+- All 8 inline JavaScript blocks passed syntax compilation with Node.js.
+- ZIP archive integrity test passed.
+- A full runtime test inside AppMint / Android has not been performed here.
+- This is a visual adaptation of the reference to LUBB's existing content and structure, not a pixel-for-pixel copy of the unrelated Quest learning dashboard.
