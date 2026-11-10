@@ -3188,3 +3188,33 @@ if('serviceWorker' in navigator){
 </style>
 
 </html>
+
+<style id="lubb-v64-2-2-touch-landscape-layout-fix">
+/* V64.2.2: treat high-resolution touch tablets in landscape as tablets, not desktop monitors. */
+@media screen and (pointer:coarse) and (orientation:landscape) and (min-width:901px) {
+  html,body { max-width:100%; overflow-x:hidden; }
+  .wrap {
+    width:100%!important; max-width:1600px!important; margin-inline:auto!important;
+    padding:16px 112px 28px 20px!important;
+    display:grid!important; grid-template-columns:repeat(12,minmax(0,1fr))!important;
+    gap:16px!important; align-items:start!important;
+  }
+  .brandbar,.backup-bar,#base,.app-footer { grid-column:1/-1!important; min-width:0!important; }
+  .hero { grid-column:6/-1!important; min-width:0!important; margin:0!important; }
+  #dayZone { grid-column:1/6!important; min-width:0!important; margin:0!important; display:grid!important; gap:12px!important; }
+  #dayZone .daybox { margin:0!important; min-width:0!important; }
+  #dayZone .stats { display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important; gap:10px!important; }
+  #dayZone .grid.two { display:grid!important; grid-template-columns:1fr!important; gap:12px!important; }
+  #dayZone .grid.two>.card { min-width:0!important; margin:0!important; }
+  .side-nav#mainSideNav { right:12px!important; width:76px!important; }
+  .side-nav#mainSideNav.is-collapsed { width:64px!important; }
+  .hero,.clock-card-v61 { padding:18px!important; }
+  .card { padding:16px!important; }
+}
+@media screen and (pointer:coarse) and (orientation:landscape) and (min-width:901px) and (max-height:700px) {
+  .wrap { padding-top:10px!important; gap:12px!important; }
+  .side-nav#mainSideNav { top:8px!important; bottom:8px!important; overflow-y:auto!important; }
+  .side-nav#mainSideNav>button:not(.nav-brand):not(.nav-collapse) { min-height:50px!important; }
+  .hero { min-height:0!important; }
+}
+</style>

@@ -1,0 +1,7 @@
+LUBB V64.2.2 – Touch landscape responsive correction
+
+Root cause: the previous landscape fix was restricted to CSS viewport widths <=900px. High-resolution touch devices (including tablets whose browser reports a wider CSS viewport) bypassed it and received the desktop layout and desktop spacing.
+
+Fix: apply the landscape layout to coarse-pointer touch devices based on orientation and touch input, not a narrow width limit. Keep the compact right-side navigation, remove the restrictive desktop-like width behavior, and make the dashboard grid fit the available content width. Reduce vertical spacing for short landscape viewports.
+
+No application logic, data model, theme colors, or export/print templates were changed.
