@@ -1,97 +1,21 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#243b53">
-<title>LUBB — مساحة يومك</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<div class="app-shell">
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <div class="brand-mark">L</div>
-      <div class="brand-copy"><strong>LUBB</strong><span>مساحة يومك</span></div>
-      <button class="icon-btn collapse-btn" id="collapseBtn" aria-label="طي القائمة">‹</button>
-    </div>
-    <div class="side-label">مساحة العمل</div>
-    <nav class="nav">
-      <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span><span>الرئيسية</span></button>
-      <button class="nav-item" data-view="calendar"><span class="nav-icon">▦</span><span>التاريخ والتقويم</span></button>
-      <button class="nav-item" data-view="tasks"><span class="nav-icon">✓</span><span>المهام</span><span class="nav-count">8</span></button>
-      <button class="nav-item" data-view="notes"><span class="nav-icon">▤</span><span>الملاحظات</span></button>
-      <button class="nav-item" data-view="base"><span class="nav-icon">▣</span><span>القاعدة الرئيسية</span></button>
-    </nav>
-    <div class="side-spacer"></div>
-    <div class="sidebar-tip"><div class="tip-icon">✦</div><strong>خطوة صغيرة كل يوم</strong><p>تنظيمك اليوم يصنع فرقاً كبيراً غداً.</p></div>
-    <button class="nav-item settings-link" data-view="settings"><span class="nav-icon">⚙</span><span>الإعدادات</span></button>
-    <div class="profile"><div class="avatar">م</div><div><strong>مساحتي الشخصية</strong><small>حساب محلي</small></div><span class="more">•••</span></div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div class="mobile-brand"><div class="brand-mark">L</div><strong>LUBB</strong></div>
-      <div class="breadcrumb"><span>مساحة العمل</span><b>/</b><strong id="pageTitle">الرئيسية</strong></div>
-      <div class="top-actions"><button class="icon-btn" title="بحث">⌕</button><button class="icon-btn notification" title="التنبيهات">♧<i></i></button><div class="top-date" id="topDate"></div></div>
-      <button class="icon-btn mobile-menu" id="mobileMenu" aria-label="القائمة">☰</button>
-    </header>
-
-    <section class="page active-page" id="home">
-      <div class="welcome-row">
-        <div><div class="eyebrow"><span class="live-dot"></span> مساحة هادئة لإنجاز أكثر</div><h1>صباح الخير، أهلاً بعودتك <span>✦</span></h1><p class="subheading">رتّب أولوياتك، وابدأ يومك بخطوة واضحة.</p></div>
-        <button class="primary-btn" id="quickAdd">＋ إضافة جديدة</button>
-      </div>
-
-      <div class="hero-grid">
-        <article class="hero-card">
-          <div class="hero-top"><div><span class="muted-light">اليوم</span><h2 id="fullDate">الثلاثاء، 10 نوفمبر 2026</h2><p>كل إنجاز يبدأ بقرار.</p></div><div class="clock" id="clock">09:41<span>ص</span></div></div>
-          <div class="hero-bottom"><div class="progress-copy"><span>تقدم يومك</span><strong>68%</strong></div><div class="progress-track"><span style="width:68%"></span></div><div class="hero-meta"><span>استمر، أنت على الطريق الصحيح</span><span>من 8 مهام</span></div></div>
-          <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
-        </article>
-        <article class="focus-card"><div class="focus-icon">✧</div><span class="card-kicker">تركيز اليوم</span><h3>أنجز الأهم أولاً</h3><p>ابدأ بالمهمة ذات الأولوية العالية، واترك مساحة لبقية يومك.</p><button class="text-btn" data-go="tasks">عرض مهامي <span>←</span></button></article>
-      </div>
-
-      <div class="stats-grid">
-        <article class="stat-card"><div class="stat-head"><span>إجمالي المهام</span><span class="stat-icon blue">✓</span></div><strong>12</strong><div class="stat-foot"><span class="positive">+3</span> عن الأسبوع الماضي</div></article>
-        <article class="stat-card"><div class="stat-head"><span>مهام مكتملة</span><span class="stat-icon green">↗</span></div><strong>8</strong><div class="stat-foot"><span class="positive">67%</span> نسبة الإنجاز</div></article>
-        <article class="stat-card"><div class="stat-head"><span>الملاحظات</span><span class="stat-icon violet">▤</span></div><strong>24</strong><div class="stat-foot">ملاحظة محفوظة</div></article>
-        <article class="stat-card"><div class="stat-head"><span>التذكيرات</span><span class="stat-icon amber">◷</span></div><strong>3</strong><div class="stat-foot">تذكيرات قادمة اليوم</div></article>
-      </div>
-
-      <div class="content-grid">
-        <section class="panel tasks-panel">
-          <div class="panel-heading"><div><span class="section-kicker">قائمة اليوم</span><h3>المهام القادمة</h3></div><button class="link-btn" data-go="tasks">كل المهام ←</button></div>
-          <div class="task-list">
-            <label class="task-row"><input type="checkbox"><span class="checkmark"></span><span class="task-text"><strong>مراجعة خطة الأسبوع</strong><small>اليوم · 10:00 ص</small></span><span class="priority urgent">عاجلة</span></label>
-            <label class="task-row"><input type="checkbox"><span class="checkmark"></span><span class="task-text"><strong>ترتيب الملاحظات والمستندات</strong><small>اليوم · 12:30 م</small></span><span class="priority normal">عادية</span></label>
-            <label class="task-row"><input type="checkbox"><span class="checkmark"></span><span class="task-text"><strong>تجهيز قائمة أعمال الغد</strong><small>اليوم · 04:00 م</small></span><span class="priority normal">عادية</span></label>
-          </div>
-          <button class="add-inline" id="addTask">＋ إضافة مهمة جديدة</button>
-        </section>
-        <section class="panel reminders-panel">
-          <div class="panel-heading"><div><span class="section-kicker">لا تنسَ</span><h3>التذكيرات</h3></div><button class="icon-btn small">•••</button></div>
-          <div class="reminder-item"><div class="reminder-time"><strong>11:30</strong><small>صباحاً</small></div><div class="reminder-line"></div><div class="reminder-detail"><strong>موعد متابعة</strong><small>مراجعة تقدم العمل</small></div><span class="reminder-dot"></span></div>
-          <div class="reminder-item"><div class="reminder-time"><strong>02:00</strong><small>مساءً</small></div><div class="reminder-line"></div><div class="reminder-detail"><strong>استراحة قصيرة</strong><small>خذ وقتاً لتجديد نشاطك</small></div><span class="reminder-dot soft"></span></div>
-          <button class="add-inline" id="addReminder">＋ إضافة تذكير</button>
-        </section>
-      </div>
-
-      <div class="bottom-grid">
-        <section class="panel mini-calendar"><div class="panel-heading"><div><span class="section-kicker">نظرة سريعة</span><h3>تقويم نوفمبر</h3></div><button class="link-btn" data-go="calendar">فتح التقويم ←</button></div><div class="calendar-week"><span>ح</span><span>ن</span><span>ث</span><span>ر</span><span>خ</span><span>ج</span><span>س</span></div><div class="calendar-days" id="miniDays"></div></section>
-        <section class="panel notes-panel"><div class="panel-heading"><div><span class="section-kicker">أفكارك محفوظة</span><h3>آخر الملاحظات</h3></div><button class="link-btn" data-go="notes">كل الملاحظات ←</button></div><div class="note-preview"><span class="note-color"></span><div><strong>أفكار لتطوير الأسبوع</strong><p>تجميع الأفكار وترتيبها حسب الأولوية...</p><small>اليوم · 09:15 ص</small></div><span class="note-arrow">←</span></div><div class="note-preview"><span class="note-color lavender"></span><div><strong>قائمة أشياء أحتاجها</strong><p>تحديث القائمة قبل نهاية الشهر...</p><small>أمس · 06:20 م</small></div><span class="note-arrow">←</span></div></section>
-      </div>
-      <footer>كل بياناتك في مكان واحد <span>·</span> محفوظة على جهازك</footer>
-    </section>
-
-    <section class="page placeholder-page" id="calendar"><div class="page-intro"><span class="section-kicker">نظّم وقتك</span><h1>التاريخ والتقويم</h1><p>نظرة شهرية واضحة لمواعيدك ومهامك.</p></div><div class="panel"><div class="panel-heading"><h3>نوفمبر 2026</h3><div class="calendar-controls"><button class="icon-btn">‹</button><button class="secondary-btn">اليوم</button><button class="icon-btn">›</button></div></div><div class="calendar-week"><span>الأحد</span><span>الاثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span><span>السبت</span></div><div class="large-calendar" id="largeDays"></div></div></section>
-    <section class="page placeholder-page" id="tasks"><div class="page-intro"><span class="section-kicker">خطط وأنجز</span><h1>المهام</h1><p>رتّب مهامك حسب الأولوية وتابع تقدمك.</p></div><div class="stats-grid"><article class="stat-card"><span>كل المهام</span><strong>12</strong></article><article class="stat-card"><span>قيد التنفيذ</span><strong>4</strong></article><article class="stat-card"><span>مكتملة</span><strong>8</strong></article></div><div class="panel"><div class="panel-heading"><h3>قائمة المهام</h3><button class="primary-btn" id="tasksAdd">＋ إضافة مهمة</button></div><div class="task-list"><label class="task-row"><input type="checkbox"><span class="checkmark"></span><span class="task-text"><strong>مراجعة خطة الأسبوع</strong><small>اليوم · عاجلة</small></span><span class="priority urgent">عاجلة</span></label><label class="task-row"><input type="checkbox"><span class="checkmark"></span><span class="task-text"><strong>ترتيب الملاحظات والمستندات</strong><small>اليوم · عادية</small></span><span class="priority normal">عادية</span></label></div></div></section>
-    <section class="page placeholder-page" id="notes"><div class="page-intro"><span class="section-kicker">مساحة أفكارك</span><h1>الملاحظات</h1><p>احفظ أفكارك ومعلوماتك المهمة في مكان واحد.</p></div><div class="panel"><div class="panel-heading"><h3>كل الملاحظات</h3><button class="primary-btn" id="notesAdd">＋ ملاحظة جديدة</button></div><div class="note-preview"><span class="note-color"></span><div><strong>أفكار لتطوير الأسبوع</strong><p>تجميع الأفكار وترتيبها حسب الأولوية...</p></div></div></div></section>
-    <section class="page placeholder-page" id="base"><div class="page-intro"><span class="section-kicker">مساحتك طويلة الأجل</span><h1>القاعدة الرئيسية</h1><p>نظّم أعمالك وسجلاتك ومشاريعك في مساحة واحدة.</p></div><div class="stats-grid"><article class="stat-card"><span>الأيام والسجل</span><strong>30</strong></article><article class="stat-card"><span>المهام الرئيسية</span><strong>6</strong></article><article class="stat-card"><span>الأرشيف</span><strong>18</strong></article></div><div class="base-cards"><article class="panel"><span class="stat-icon blue">▦</span><h3>الأيام والسجل</h3><p>تابع أعمالك حسب اليوم والتاريخ.</p></article><article class="panel"><span class="stat-icon green">✓</span><h3>المهام الرئيسية</h3><p>نظّم الأعمال طويلة الأجل.</p></article><article class="panel"><span class="stat-icon violet">▥</span><h3>التقارير</h3><p>راجع مؤشرات الإنجاز والتقدم.</p></article><article class="panel"><span class="stat-icon amber">▣</span><h3>الأرشيف</h3><p>احتفظ بالعناصر المكتملة والمؤرشفة.</p></article></div></section>
-    <section class="page placeholder-page" id="settings"><div class="page-intro"><span class="section-kicker">تحكم بتجربتك</span><h1>الإعدادات</h1><p>خصص التطبيق، وأدر بياناتك وحماية حسابك المحلي.</p></div><div class="settings-list"><div class="panel setting-row"><div><strong>المظهر</strong><small>اختر الوضع الفاتح أو الداكن أو التلقائي</small></div><select><option>تلقائي</option><option>فاتح</option><option>داكن</option></select></div><div class="panel setting-row"><div><strong>بداية الأسبوع</strong><small>حدد اليوم الذي يبدأ به أسبوعك</small></div><select><option>الأحد</option><option>السبت</option><option>الاثنين</option></select></div><div class="panel setting-row"><div><strong>النسخ الاحتياطي</strong><small>أنشئ نسخة من بياناتك أو استعد نسخة سابقة</small></div><button class="secondary-btn">إدارة النسخ</button></div><div class="panel setting-row"><div><strong>حماية التطبيق</strong><small>رمز PIN وعبارة الاسترداد</small></div><button class="secondary-btn">إعداد الحماية</button></div><div class="panel setting-row"><div><strong>معلومات التطبيق</strong><small>LUBB · V64.0.0 · تخزين محلي ودعم دون اتصال</small></div><span class="muted">V64.0.0</span></div></div></section>
-  </main>
-</div>
-<div class="toast" id="toast"></div>
-<div class="modal-backdrop" id="modal"><div class="modal"><button class="modal-close" id="modalClose">×</button><span class="section-kicker">إضافة سريعة</span><h3 id="modalTitle">إضافة مهمة</h3><input id="newTitle" placeholder="اكتب العنوان هنا"><div class="modal-actions"><button class="secondary-btn" id="cancelModal">إلغاء</button><button class="primary-btn" id="saveModal">حفظ</button></div></div></div>
-<script src="app.js"></script>
-</body></html>
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LUBB</title><link rel="stylesheet" href="styles.css"></head><body>
+<div class="layout"><aside class="side" id="side"><div class="brand"><b class="mark">L</b><span><strong>LUBB</strong><small>مساحة عملك</small></span><button id="close">×</button></div><button class="workspace">●　مساحتي الشخصية　⌄</button>
+<div class="label">مساحة العمل</div><nav><button class="active" data-title="اليوم">◷　اليوم <i>6</i></button><button data-title="القادم">▦　القادم</button><button data-title="الوارد">↳　الوارد <i>3</i></button><button data-title="كل المهام">☷　كل المهام</button></nav>
+<div class="label">قوائمك　＋</div><nav><button data-title="مشاريع العمل">●　مشاريع العمل</button><button data-title="شخصي">●　شخصي</button><button data-title="أفكار لاحقاً">●　أفكار لاحقاً</button></nav>
+<div class="label">أدواتك</div><nav><button data-title="التقويم">▦　التقويم</button><button data-title="الملاحظات">▤　الملاحظات</button><button data-title="التذكيرات">◉　التذكيرات</button><button data-title="الأرشيف">▱　الأرشيف</button></nav><div class="bottom"><nav><button data-title="الإعدادات">⚙　الإعدادات</button></nav><div class="profile">م　 <span><b>مساحتي</b><small>الحساب الشخصي</small></span></div></div></aside>
+<main><header><button id="menu">☰</button><span>مساحتي الشخصية　/　<b id="crumb">اليوم</b></span><div class="tools"><button id="search">⌕　بحث في LUBB</button><button>؟</button></div></header><section class="content"><div class="heading"><div><small>الثلاثاء، 10 نوفمبر 2026</small><h1 id="title">اليوم</h1><p>رتّب أولوياتك وابدأ بما يهم.</p></div><button class="primary" id="add">＋ مهمة جديدة</button></div>
+<div class="stats"><div><em>◷</em><span><b id="count">6</b><small>مهام متبقية اليوم</small></span></div><div><em class="green">✓</em><span><b>4</b><small>أُنجزت هذا الأسبوع</small></span></div><div class="progress"><span>إنجاز اليوم <b>40%</b></span><hr></div></div>
+<div class="columns"><section class="panel tasks"><div class="panelhead"><span><b>المهام اليومية</b><small>الثلاثاء، 10 نوفمبر</small></span><button>ترتيب حسب: الأولوية　⌄</button></div><div class="group">الأولوية <hr> 2</div><div id="tasklist">
+<label class="task"><input type="checkbox"><span class="check"></span><span class="copy"><b>مراجعة خطة الأسبوع</b><small>مشاريع العمل · قبل 11:00 ص</small></span><i class="high">عالية</i><button>•••</button></label>
+<label class="task"><input type="checkbox"><span class="check"></span><span class="copy"><b>إرسال تحديث المشروع للفريق</b><small>مشاريع العمل · 12:30 م</small></span><i class="high">عالية</i><button>•••</button></label></div>
+<div class="group later">بقية اليوم <hr> 4</div>
+<div id="more">
+<label class="task"><input type="checkbox"><span class="check"></span><span class="copy"><b>ترتيب ملفات المشروع</b><small>مشاريع العمل · 2:00 م</small></span><i class="medium">متوسطة</i><button>•••</button></label>
+<label class="task"><input type="checkbox"><span class="check"></span><span class="copy"><b>شراء المستلزمات المنزلية</b><small>شخصي · 5:00 م</small></span><i class="low">منخفضة</i><button>•••</button></label>
+<label class="task"><input type="checkbox"><span class="check"></span><span class="copy"><b>قراءة 20 صفحة</b><small>شخصي</small></span><i class="low">منخفضة</i><button>•••</button></label>
+<label class="task"><input type="checkbox"><span class="check"></span><span class="copy"><b>تجهيز قائمة الغد</b><small>أفكار لاحقاً</small></span><i class="medium">متوسطة</i><button>•••</button></label></div>
+<button class="addinline" id="add2">＋ أضف مهمة</button><div class="completed">⌄　 مكتملة　2　<small>إظهار المهام المنجزة</small></div></section>
+<aside><section class="panel"><div class="panelhead"><span><b>على جدولك</b><small>المواعيد القادمة</small></span><button data-title="التقويم">عرض التقويم ←</button></div><div class="date"><b>10</b><span>الثلاثاء<small>نوفمبر 2026</small></span><i>اليوم</i></div>
+<div class="event"><time>10:30</time><span class="blue"></span><div><b>مراجعة خطة الأسبوع</b><small>مشاريع العمل · 30 دقيقة</small></div></div><div class="event"><time>12:30</time><span class="greenbar"></span><div><b>تحديث الفريق</b><small>اجتماع عبر الإنترنت</small></div></div><div class="event"><time>16:00</time><span class="amberbar"></span><div><b>موعد شخصي</b><small>45 دقيقة</small></div></div></section>
+<section class="panel notes"><div class="panelhead"><span><b>ملاحظات سريعة</b><small>أفكار تريد الاحتفاظ بها</small></span><button data-title="الملاحظات">↗</button></div><div class="note"><b>▤　 أفكار تطوير المشروع</b><small>إضافة مساحة لمتابعة التقدم...</small></div><div class="note"><b>▤　 قائمة للقراءة</b><small>كتب ومقالات أعود إليها لاحقاً</small></div><button data-title="الملاحظات">＋ ملاحظة جديدة</button></section></aside></div><footer>● تعمل مساحة LUBB محلياً — آخر حفظ قبل لحظات</footer></section></main></div><div id="shade"></div>
+<dialog id="dlg"><form method="dialog"><h3>مهمة جديدة <button value="cancel">×</button></h3><input id="taskname" placeholder="ما الذي تريد إنجازه؟" required><div class="formfoot"><button value="cancel">إلغاء</button><button id="save" class="primary" value="default">إضافة المهمة</button></div></form></dialog><script src="app.js"></script></body></html>
